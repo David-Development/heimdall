@@ -1,0 +1,42 @@
+# https://hub.docker.com/_/node/
+FROM node:9-alpine
+    
+RUN npm install -g yarn
+
+# Install Python2
+RUN apk add --no-cache python \
+    && python -m ensurepip \
+    && rm -r /usr/lib/python*/ensurepip \
+    && pip install --upgrade pip setuptools \
+    && rm -r /root/.cache
+
+# Install make
+#RUN apk add --update make 
+
+VOLUME ["/app"]
+WORKDIR /app/
+
+
+# Create app
+#RUN npm install -g create-react-app \
+#    && yarn config set init-author-name "David Luhmer" \
+#    && yarn config set init-author-email "david.luhmer@smail.inf.h-brs.de" \
+#    && yarn config set init-author-url "" \
+#    && yarn config set init-version "1.0" \
+#    && yarn config set init-license "MIT"
+#CMD /bin/sh -c "create-react-app . && yarn init --yes && yarn add react react-dom"
+# Difference between ; and && in shell command: ; executes all of them. && only execute is previous was successful
+
+# Run app
+
+
+#CMD yarn start
+CMD /bin/sh -c "yarn install && yarn start"
+
+
+
+
+# yarn start # Starts the development server.
+# yarn build # Bundles the app into static files for production.
+# yarn test  # Starts the test runner.
+# yarn eject # Removes this tool and copies build dependencies, configuration files and scripts into the app directory. If you do this, you can’t go back!

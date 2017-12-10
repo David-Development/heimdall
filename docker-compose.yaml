@@ -1,0 +1,94 @@
+version: '2.1'
+
+services:
+
+  camera_rtsp:
+    build:
+      context: .
+      dockerfile: Dockerfile.python3
+    volumes:
+      - "./heimdall/startDockerCamera.sh:/app/startDocker.sh"
+      - "./heimdall/camerahandler_rtsp.py:/app/camerahandler_rtsp.py"
+    depends_on:
+      - heimdall
+
+  heimdall: 
+    build:
+      context: .
+      dockerfile: Dockerfile.python3
+    #restart: always
+    #mem_limit: 4096m #2048m
+    volumes:
+      - "./heimdall:/app/"
+    depends_on:
+      - postgres
+      - redis
+    ports: 
+      - "5000:5000/tcp"
+
+  postgres: 
+    image: postgres
+    #ports:
+    #  - "5432:5432"
+    environment: 
+      # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
+      - POSTGRES_DB=heimdall
+      
+      # If it is not specified, then the default user of 'postgres' will be used.
+      - POSTGRES_USER=heimdall 
+
+      # This environment variable sets the superuser password for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable
+      - POSTGRES_PASSWORD=heimdall
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+
+  ui_frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: heimdall/frontend
+    volumes:
+      - "./frontend/:/app/"
+    ports:
+      - "5001:3000/tcp"
+
+  ffmpeg_h264_stream:
+    build:
+      context: .
+      dockerfile: Dockerfile.ffmpeg-h264-stream
+    image: heimdall/ffmpeg-h264-stream
+    volumes:
+      - "./ffmpeg-h264-stream/:/app/"
+    ports:
+      - "5002:8080/tcp"
+
+
+  mock_rest_api:
+    build:
+      context: mock_rest_api
+    image: luhmer/json-server
+    volumes:
+      - "./mock_rest_api/mock_data.json:/data/db.json"
+      - "./mock_rest_api/images/:/usr/local/lib/node_modules/json-server/lib/server/public/images/"
+#      - "./mock_rest_api/images/:/data/static/images/"
+    ports:
+      - "5003:80"
+
+
+  #espeakbox:
+  #  image: parente/espeakbox
+  #  ports:
+  #    - "8080:8080"
+    
+  # localhost:8080/voices
+  # localhost:8080/speech?text=David Luhmer&voice=de&speed=100&encoding=mp3
+
+
+  pgstudio:
+    image: lukasmartinelli/pgstudio
+    ports:
+      - "8080:8080"
