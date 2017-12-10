@@ -1,0 +1,6 @@
+[submodule "heimdall-frontend"]
+	path = heimdall-frontend
+	url = https://github.com/David-Development/heimdall-frontend.git
+[submodule "heimdall-backend"]
+	path = heimdall-backend
+	url = https://github.com/David-Development/heimdall-backend.git
