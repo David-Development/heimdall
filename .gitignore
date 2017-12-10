@@ -1,2 +1,3 @@
 *.DS_Store
 ffmpeg-h264-stream/node_modules/*
+*.jpg
