@@ -1,0 +1,356 @@
+{
+    "persons": [
+        {
+            "id": 1141,
+            "images": 14,
+            "path": "images/subjects/Christoph",
+            "subject_gallery": true,
+            "name": "Christoph",
+            "avatar": "http://localhost:5003/images/subjects/Christoph/2017-10-28-14-43-25-360.jpg"
+        },
+        {
+            "id": 1142,
+            "images": 19,
+            "path": "images/subjects/David",
+            "subject_gallery": true,
+            "name": "David",
+            "avatar": "http://localhost:5003/images/subjects/David/2017-10-28-12-50-40-004.jpg"
+        },
+        {
+            "id": 1143,
+            "images": 6,
+            "path": "images/subjects/Sina",
+            "subject_gallery": true,
+            "name": "Sina",
+            "avatar": "http://localhost:5003/images/subjects/Sina/2017-10-28-12-55-18-600.jpg"
+        }
+    ],
+
+    "person": [
+        {
+            "id":1141,
+            "images": [
+                {
+                    "id": 9504,
+                    "name": "2017-10-28-14-43-25-360.jpg"
+                },
+                {
+                    "id": 9503,
+                    "name": "2017-10-28-14-43-41-331.jpg"
+                },
+                {
+                    "id": 9502,
+                    "name": "2017-10-28-14-43-36-064.jpg"
+                },
+                {
+                    "id": 9501,
+                    "name": "2017-10-28-14-43-40-356.jpg"
+                },
+                {
+                    "id": 9500,
+                    "name": "2017-10-28-14-43-31-518.jpg"
+                },
+                {
+                    "id": 9499,
+                    "name": "2017-10-28-14-43-35-101.jpg"
+                },
+                {
+                    "id": 9498,
+                    "name": "2017-10-28-14-43-30-440.jpg"
+                },
+                {
+                    "id": 9497,
+                    "name": "2017-10-28-14-43-27-589.jpg"
+                },
+                {
+                    "id": 9496,
+                    "name": "2017-10-28-14-43-39-338.jpg"
+                },
+                {
+                    "id": 9495,
+                    "name": "2017-10-28-14-43-42-307.jpg"
+                },
+                {
+                    "id": 9494,
+                    "name": "2017-10-28-14-43-29-303.jpg"
+                },
+                {
+                    "id": 9493,
+                    "name": "2017-10-28-14-43-26-109.jpg"
+                },
+                {
+                    "id": 9492,
+                    "name": "2017-10-28-14-43-34-025.jpg"
+                },
+                {
+                    "id": 9491,
+                    "name": "2017-10-28-14-43-32-504.jpg"
+                }
+            ]
+        },
+        {
+            "id": 1142,
+            "images": [
+                {
+                    "id": 9523,
+                    "name": "2017-10-28-14-13-38-807.jpg"
+                },
+                {
+                    "id": 9522,
+                    "name": "2017-10-28-12-50-53-923.jpg"
+                },
+                {
+                    "id": 9521,
+                    "name": "2017-10-28-14-13-37-882.jpg"
+                },
+                {
+                    "id": 9520,
+                    "name": "2017-10-28-12-50-41-375.jpg"
+                },
+                {
+                    "id": 9519,
+                    "name": "2017-10-28-12-50-49-775.jpg"
+                },
+                {
+                    "id": 9518,
+                    "name": "2017-10-28-12-50-40-004.jpg"
+                },
+                {
+                    "id": 9517,
+                    "name": "2017-10-28-12-50-48-375.jpg"
+                },
+                {
+                    "id": 9516,
+                    "name": "2017-10-28-14-13-32-042.jpg"
+                },
+                {
+                    "id": 9515,
+                    "name": "2017-10-28-12-50-52-576.jpg"
+                },
+                {
+                    "id": 9514,
+                    "name": "2017-10-28-12-50-56-569.jpg"
+                },
+                {
+                    "id": 9513,
+                    "name": "2017-10-28-12-50-44-119.jpg"
+                },
+                {
+                    "id": 9512,
+                    "name": "2017-10-28-12-50-45-490.jpg"
+                },
+                {
+                    "id": 9511,
+                    "name": "2017-10-28-12-50-57-994.jpg"
+                },
+                {
+                    "id": 9510,
+                    "name": "2017-10-28-14-13-36-964.jpg"
+                },
+                {
+                    "id": 9509,
+                    "name": "2017-10-28-12-50-42-757.jpg"
+                },
+                {
+                    "id": 9508,
+                    "name": "2017-10-28-12-50-59-650.jpg"
+                },
+                {
+                    "id": 9507,
+                    "name": "2017-10-28-12-50-55-260.jpg"
+                },
+                {
+                    "id": 9506,
+                    "name": "2017-10-28-12-50-46-918.jpg"
+                },
+                {
+                    "id": 9505,
+                    "name": "2017-10-28-12-50-51-183.jpg"
+                }
+            ]
+        },
+        {
+            "id": 1143,
+            "images": [
+                {
+                    "id": 9529,
+                    "name": "2017-10-28-13-00-06-524.jpg"
+                },
+                {
+                    "id": 9528,
+                    "name": "2017-10-28-12-55-20-662.jpg"
+                },
+                {
+                    "id": 9527,
+                    "name": "2017-10-28-13-01-16-689.jpg"
+                },
+                {
+                    "id": 9526,
+                    "name": "2017-10-28-12-55-24-788.jpg"
+                },
+                {
+                    "id": 9525,
+                    "name": "2017-10-28-13-01-34-200.jpg"
+                },
+                {
+                    "id": 9524,
+                    "name": "2017-10-28-12-55-18-600.jpg"
+                }
+            ]
+        }
+    ],
+
+    "events": [
+        {
+            "id": 123,
+            "date": "17.11.2017",
+            "time": "19:24",
+            "images": [
+            {
+                "id": 11,
+                "url": "http://localhost:5003/images/subjects/David/2017-10-28-12-50-40-004.jpg",
+                "detected": [
+                    {
+                        "id": 1142,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            },
+            {
+                "id": 12,
+                "url": "http://localhost:5003/images/subjects/Christoph/2017-10-28-14-43-25-360.jpg",
+                "detected": [
+                    {
+                        "id": 1141,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            },
+            {
+                "id": 13,
+                "url": "http://localhost:5003/images/subjects/Sina/2017-10-28-12-55-18-600.jpg",
+                "detected": [
+                    {
+                        "id": 1143,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            }
+            ]
+        },
+        {
+            "id": 124,
+            "date": "17.11.2017",
+            "time": "18:16",
+            "images": [
+            {
+                "id": 16,
+                "url": "http://localhost:5003/images/subjects/David/2017-10-28-12-50-40-004.jpg",
+                "detected": [
+                    {
+                        "id": 1142,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            },
+            {
+                "id": 17,
+                "url": "http://localhost:5003/images/subjects/Christoph/2017-10-28-14-43-25-360.jpg",
+                "detected": [
+                    {
+                        "id": 1141,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            },
+            {
+                "id": 18,
+                "url": "http://localhost:5003/images/subjects/David/2017-10-28-12-50-40-004.jpg",
+                "detected": [
+                    {
+                        "id": 1142,
+                        "location": [1, 2, 3, 4]
+                    }
+                ]
+            }
+            ]
+        }
+    ],
+
+
+    "models": [
+        {
+            "id": 19,
+            "loaded": true,
+            "name": "SVM20171117112008",
+            "learning_curve_url": "images/model_plots/SVM20171117112008_learning.png",
+            "total_no_faces": 0,
+            "date": "Fri, 17 Nov 2017 11:20:08",
+            "total_images": 150,
+            "classifier_type": "SVM",
+            "training_time": 50,
+            "num_classes": 3,
+            "cv_score": 1.0,
+            "confusion_url": "images/model_plots/SVM20171117112008_confusion.png"
+        },
+        {
+            "id": 18,
+            "loaded": false,
+            "name": "SVM20171117103020",
+            "learning_curve_url": "images/model_plots/SVM20171117103020_learning.png",
+            "total_no_faces": 0,
+            "date": "Fri, 17 Nov 2017 10:30:21",
+            "total_images": 150,
+            "classifier_type": "SVM",
+            "training_time": 52,
+            "num_classes": 3,
+            "cv_score": 1.0,
+            "confusion_url": "images/model_plots/SVM20171117103020_confusion.png"
+        },
+        {
+            "id": 17,
+            "loaded": false,
+            "name": "SVM20171117102635",
+            "learning_curve_url": "images/model_plots/SVM20171117102635_learning.png",
+            "total_no_faces": 0,
+            "date": "Fri, 17 Nov 2017 10:26:35",
+            "total_images": 150,
+            "classifier_type": "SVM",
+            "training_time": 52,
+            "num_classes": 3,
+            "avg_base_img": 13.0,
+            "cv_score": 1.0,
+            "confusion_url": "images/model_plots/SVM20171117102635_confusion.png"
+        },
+        {
+            "id": 16,
+            "loaded": false,
+            "name": "SVM20171117102515",
+            "learning_curve_url": "images/model_plots/SVM20171117102515_learning.png",
+            "total_no_faces": 0,
+            "date": "Fri, 17 Nov 2017 10:25:15",
+            "total_images": 150,
+            "classifier_type": "SVM",
+            "training_time": 52,
+            "num_classes": 3,
+            "avg_base_img": 13.0,
+            "cv_score": 1.0,
+            "confusion_url": "images/model_plots/SVM20171117102515_confusion.png"
+        },
+        {
+            "id": 15,
+            "loaded": false,
+            "name": "SVM20171117095648",
+            "learning_curve_url": "images/model_plots/SVM20171117095648_learning.png",
+            "total_no_faces": 0,
+            "date": "Fri, 17 Nov 2017 09:56:48",
+            "total_images": 150,
+            "classifier_type": "SVM",
+            "training_time": 50,
+            "num_classes": 3,
+            "avg_base_img": 13.0,
+            "cv_score": 1.0,
+            "confusion_url": "images/model_plots/SVM20171117095648_confusion.png"
+        }
+    ]
+}
