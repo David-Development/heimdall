@@ -1,0 +1,37 @@
+FROM luhmer/opencv-python3
+
+#WORKDIR /app/
+
+#RUN mkdir -p app/ml_models \
+#    && cd app/ml_models \
+#    && wget https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2 \
+#    && wget https://github.com/davisking/dlib-models/raw/master/shape_predictor_68_face_landmarks.dat.bz2 \
+#    && bunzip2 dlib_face_recognition_resnet_model_v1.dat.bz2 \
+#    && bunzip2 shape_predictor_68_face_landmarks.dat.bz2
+#    #&& rm dlib_face_recognition_resnet_model_v1.dat.bz2 \
+#    #&& rm shape_predictor_68_face_landmarks.dat.bz2
+
+
+# TODO install lib-boost in the first step of the luhmer/opencv-python3
+RUN apt-get update \
+    && apt-get install -y htop libboost-all-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# copy the requirements file over
+COPY ./heimdall-backend/requirements.txt requirements.txt
+RUN pip3 install -U -r requirements.txt \
+    && rm requirements.txt
+
+VOLUME ["/app"]
+WORKDIR /app/
+
+#ENV PYTHONIOENCODING=utf8
+
+
+# matplotlib config (used by benchmark)
+RUN mkdir -p /root/.config/matplotlib
+RUN echo "backend : Agg" > /root/.config/matplotlib/matplotlibrc
+
+
+#CMD /bin/bash -c "ls -la /usr/local/lib/python2.7/site-packages/ ; ls -la ~/opencv/opencv-3.3.0/build/lib/"
+CMD /bin/bash -c "sh startDocker.sh"

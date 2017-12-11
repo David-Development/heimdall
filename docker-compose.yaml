@@ -5,22 +5,22 @@ services:
   camera_rtsp:
     build:
       context: .
-      dockerfile: Dockerfile.python3
+      dockerfile: Dockerfile.backend
     volumes:
-      - "./heimdall/startDockerCamera.sh:/app/startDocker.sh"
-      - "./heimdall/camerahandler_rtsp.py:/app/camerahandler_rtsp.py"
-    depends_on:
-      - heimdall
+      - "./heimdall-backend/startDockerCamera.sh:/app/startDocker.sh"
+      - "./heimdall-backend/camerahandler_rtsp.py:/app/camerahandler_rtsp.py"
 
-  heimdall: 
+  heimdall-backend: 
     build:
       context: .
-      dockerfile: Dockerfile.python3
+      dockerfile: Dockerfile.backend
     #restart: always
     #mem_limit: 4096m #2048m
+    image: luhmer/heimdall-backend
     volumes:
-      - "./heimdall:/app/"
+      - "./heimdall-backend:/app/"
     depends_on:
+      - mqtt-broker
       - postgres
       - redis
     ports: 
@@ -46,13 +46,13 @@ services:
       - "6379:6379"
 
 
-  ui_frontend:
+  heimdall-frontend:
     build:
       context: .
       dockerfile: Dockerfile.frontend
-    image: heimdall/frontend
+    image: luhmer/heimdall-frontend
     volumes:
-      - "./frontend/:/app/"
+      - "./heimdall-frontend/:/app/"
     ports:
       - "5001:3000/tcp"
 
@@ -78,6 +78,14 @@ services:
     ports:
       - "5003:80"
 
+  mock-camera:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    volumes:
+      - "./mock_camera/startDocker.sh:/app/startDocker.sh" 
+      - "./mock_camera/mqttCamera.py:/app/mqttCamera.py" 
+      - "./mock_camera/images:/app/images" 
 
   #espeakbox:
   #  image: parente/espeakbox
@@ -87,6 +95,25 @@ services:
   # localhost:8080/voices
   # localhost:8080/speech?text=David Luhmer&voice=de&speed=100&encoding=mp3
 
+
+  # http://emqttd-docs.readthedocs.io/en/latest/getstarted.html#web-dashboard
+  # Check ports: http://localhost:18083/#/listeners
+  #mqtt-broker:
+  #  build: emq_docker
+  #  image: emq
+  #  ports:
+  #    - "1883:1883/tcp"   # mqtt
+  #    - "8083:8083/tcp"   # websockets
+  #    - "18083:18083/tcp" # emq webinterface
+
+  mqtt-broker:
+    image: eclipse-mosquitto:1.4.12
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf 
+    ports:
+      - "1883:1883/tcp"   # mqtt
+      - "8083:8083/tcp"   # websockets
+      - "9001:9001/tcp"   # mosquitto
 
   pgstudio:
     image: lukasmartinelli/pgstudio

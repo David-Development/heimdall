@@ -4,3 +4,6 @@
 [submodule "heimdall-backend"]
 	path = heimdall-backend
 	url = https://github.com/David-Development/heimdall-backend.git
+[submodule "emq_docker"]
+	path = emq_docker
+	url = https://github.com/emqtt/emq_docker.git

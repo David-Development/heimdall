@@ -13,6 +13,9 @@ RUN apk add --no-cache python \
 # Install make
 #RUN apk add --update make 
 
+# Install git (required for git dependencies)
+# RUN apk add --update git 
+
 VOLUME ["/app"]
 WORKDIR /app/
 
