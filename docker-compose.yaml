@@ -28,8 +28,8 @@ services:
 
   postgres: 
     image: postgres
-    #ports:
-    #  - "5432:5432"
+    ports:
+      - "5432:5432" # required for pgstudio
     environment: 
       # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
       - POSTGRES_DB=heimdall
@@ -115,6 +115,13 @@ services:
       - "8083:8083/tcp"   # websockets
       - "9001:9001/tcp"   # mosquitto
 
+
+
+  # Login:
+  #   host: postgres
+  #   user: heimdall
+  #   pass: heimdall
+  #   database: heimdall
   pgstudio:
     image: lukasmartinelli/pgstudio
     ports:
