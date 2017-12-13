@@ -108,8 +108,9 @@ services:
 
   mqtt-broker:
     image: eclipse-mosquitto:1.4.12
+    #image: jllopis/mosquitto
     volumes:
-      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf 
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
     ports:
       - "1883:1883/tcp"   # mqtt
       - "8083:8083/tcp"   # websockets
