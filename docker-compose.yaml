@@ -56,6 +56,17 @@ services:
     ports:
       - "5001:3000/tcp"
 
+  heimdall-camera-proxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.camera-proxy
+    image: luhmer/heimdall-camera-proxy
+    environment:
+      - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
+      #- HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
+    ports:
+      - "9000:9000/tcp"
+
   ffmpeg_h264_stream:
     build:
       context: .
