@@ -33,10 +33,8 @@ services:
     environment: 
       # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
       - POSTGRES_DB=heimdall
-      
       # If it is not specified, then the default user of 'postgres' will be used.
       - POSTGRES_USER=heimdall 
-
       # This environment variable sets the superuser password for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable
       - POSTGRES_PASSWORD=heimdall
 
@@ -44,7 +42,6 @@ services:
     image: redis
     ports:
       - "6379:6379"
-
 
   heimdall-frontend:
     build:
@@ -118,10 +115,14 @@ services:
   #    - "18083:18083/tcp" # emq webinterface
 
   mqtt-broker:
+    #build: 
+    #  context: ./docker-mosquitto
+    #  dockerfile: Dockerfile
+    #image: jllopis/mosquitto:v1.4.14
     image: eclipse-mosquitto:1.4.12
-    #image: jllopis/mosquitto
     volumes:
-      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      #- ./mosquitto/mosquitto.conf:/etc/mosquitto/mosquitto.conf:ro # jllopis/mosquitto container
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # eclipse-mosquitto container
     ports:
       - "1883:1883/tcp"   # mqtt
       - "8083:8083/tcp"   # websockets
