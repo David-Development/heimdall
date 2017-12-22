@@ -59,8 +59,9 @@ services:
       dockerfile: Dockerfile.camera-proxy
     image: luhmer/heimdall-camera-proxy
     environment:
-      - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
+      #- HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
       #- HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
+      - MQTT_BROKER_IP=192.168.10.53
     ports:
       - "9000:9000/tcp"
 

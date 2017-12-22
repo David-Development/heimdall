@@ -1,17 +1,14 @@
 import socket
 import sys
 import base64
-from threading import *
+import threading
 import requests
 import os
-
+import codecs
 
 # Listen on
-HOST = '0.0.0.0'
+HOST = ''
 PORT = 9000
-
-# Heimdall API URL
-#HEIMDALL_BACKEND = os.environ.get('HEIMDALL_BACKEND')
 
 ### MQTT 
 #broker = 'mqtt-broker' 
@@ -90,7 +87,7 @@ client.loop_start()    #  run in background and free up main thread
 
 # Function for handling connections. This will be used to create threads
 def clientthread(conn):
-    image = ''
+    image = b''
     while True:
         # Receiving from client
         data = conn.recv(4096)
@@ -102,7 +99,7 @@ def clientthread(conn):
     conn.close()
 
     # send image
-    image_base_64 = base64.b64encode(image.decode("hex"))
+    image_base_64 = base64.b64encode(codecs.decode(image, "hex"))
     post_image(image_base_64)
 
 
@@ -113,6 +110,10 @@ while 1:
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
 
     # start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
-    start_new_thread(clientthread, (conn,))
+    #start_new_thread(clientthread, (conn,))
+    threading.Thread(
+        target=clientthread,
+        args=(conn,),
+    ).start()
 
 s.close()
