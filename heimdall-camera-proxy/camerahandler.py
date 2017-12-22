@@ -1,17 +1,18 @@
 import socket
 import sys
 import base64
-from threading import *
+import threading
 import requests
 import os
-
+import codecs
 
 # Listen on
-HOST = '0.0.0.0'
+HOST = ''
 PORT = 9000
 
 # Heimdall API URL
-HEIMDALL_BACKEND = os.environ.get('HEIMDALL_BACKEND')
+#HEIMDALL_BACKEND = os.environ.get('HEIMDALL_BACKEND')
+HEIMDALL_BACKEND = 'http://localhost:5000'
 
 print("Heimdall-Backend: {}".format(HEIMDALL_BACKEND))
 
@@ -36,7 +37,7 @@ print("Socket now listening on {}:{}".format(HOST, PORT))
 
 # Function for handling connections. This will be used to create threads
 def clientthread(conn):
-    image = ''
+    image = b''
     while True:
         # Receiving from client
         data = conn.recv(4096)
@@ -49,7 +50,8 @@ def clientthread(conn):
 
     # send image
     url = HEIMDALL_BACKEND + '/api/live/'
-    data = {'image': base64.b64encode(image.decode("hex")), 'annotate': 'True'}
+    
+    data = {'image': base64.b64encode(codecs.decode(image, "hex")), 'annotate': 'True'}
     requests.post(url, data=data)
 
 
@@ -60,6 +62,10 @@ while 1:
     print('Connected with ' + addr[0] + ':' + str(addr[1]))
 
     # start new thread takes 1st argument as a function name to be run, second is the tuple of arguments to the function.
-    start_new_thread(clientthread, (conn,))
+    #start_new_thread(clientthread, (conn,))
+    threading.Thread(
+        target=clientthread,
+        args=(conn,),
+    ).start()
 
 s.close()
