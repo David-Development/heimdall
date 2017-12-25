@@ -1,11 +1,13 @@
-FROM python:3
+# FROM python:3
+FROM luhmer/opencv-python3
 
 EXPOSE 9000
 
 WORKDIR /usr/src/app
 
-RUN pip install requests
+RUN pip install requests paho-mqtt
 
 COPY ./heimdall-camera-proxy/ .
 
-CMD [ "python", "-u", "./camerahandler.py" ]
+CMD [ "python3", "-u", "./camerahandler.py" ]
+#CMD [ "python3", "-m", "http.server", "9000" ]
