@@ -1,8 +1,9 @@
-version: '2.1'
+version: '3'
 
 services:
 
   camera_rtsp:
+    container_name: camera-rtsp
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -11,6 +12,7 @@ services:
       - "./heimdall-backend/camerahandler_rtsp.py:/app/camerahandler_rtsp.py"
 
   heimdall-backend: 
+    container_name: heimdall-backend
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -23,13 +25,14 @@ services:
       - mqtt-broker
       - postgres
       - redis
-    ports: 
-      - "5000:5000/tcp"
+    #ports: 
+    #  - "5000:5000/tcp"
 
   postgres: 
+    container_name: postgres
     image: postgres
-    ports:
-      - "5432:5432" # required for pgstudio
+    #ports:
+    #  - "5432:5432" # required for pgstudio
     environment: 
       # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
       - POSTGRES_DB=heimdall
@@ -44,34 +47,40 @@ services:
       - "6379:6379"
 
   heimdall-frontend:
+    container_name: heimdall-frontend
     build:
       context: .
       dockerfile: Dockerfile.frontend
     image: luhmer/heimdall-frontend
     volumes:
       - "./heimdall-frontend/:/app/"
-    ports:
-      - "5001:3000/tcp"
+    #ports:
+    #  - "5001:3000/tcp"
 
   heimdall-camera-proxy:
+    container_name: heimdall-camera-proxy
     build:
       context: .
       dockerfile: Dockerfile.camera-proxy
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
     image: luhmer/heimdall-camera-proxy
-    environment:
-      #- HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
-      #- HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
-      - MQTT_BROKER_IP=mqtt-broker # Inside same docker-compose
-      #- MQTT_BROKER_IP=192.168.10.53
+    #environment:
+    #  - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
+    #  - HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
+    #  - MQTT_BROKER_IP=mqtt-broker # Inside same docker-compose
+    #  - MQTT_BROKER_IP=192.168.10.53
     depends_on:
       - mqtt-broker
+    networks: 
+      - bridge-iot
+      - default
     ports:
-      - "9002:9000"
+      - "9000:9000"
       
 
   ffmpeg_h264_stream:
+    container_name: ffmpeg-h264-stream
     build:
       context: .
       dockerfile: Dockerfile.ffmpeg-h264-stream
@@ -83,6 +92,7 @@ services:
 
 
   mock_rest_api:
+    container_name: mock-rest-api
     build:
       context: mock_rest_api
     image: luhmer/json-server
@@ -94,6 +104,7 @@ services:
       - "5003:80"
 
   mock-camera:
+    container_name: mock-camera
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -122,6 +133,7 @@ services:
   #    - "18083:18083/tcp" # emq webinterface
 
   mqtt-broker:
+    container_name: mqtt-broker
     #build: 
     #  context: ./docker-mosquitto
     #  dockerfile: Dockerfile
@@ -132,7 +144,7 @@ services:
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # eclipse-mosquitto container
     ports:
       - "1883:1883/tcp"   # mqtt
-      - "8083:8083/tcp"   # websockets
+    #  - "8083:8083/tcp"   # websockets
       - "9001:9001/tcp"   # mosquitto
 
 
@@ -143,6 +155,34 @@ services:
   #   pass: heimdall
   #   database: heimdall
   pgstudio:
+    container_name: pgstudio
     image: lukasmartinelli/pgstudio
     ports:
       - "8080:8080"
+
+
+  heimdall-proxy:
+    container_name: proxy
+    image: nginx
+    volumes:
+      - ./nginx-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-proxy/frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - heimdall-backend
+      - heimdall-frontend
+      - mqtt-broker
+    ports:
+      - "8080:80"
+      - "8083:8083"
+  
+
+
+networks:
+  bridge-iot:
+    external: true
+#  default:
+#    driver: heimdall-default
+#  front:
+#    driver: bridge
+
+  
