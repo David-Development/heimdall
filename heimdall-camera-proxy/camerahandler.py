@@ -11,30 +11,7 @@ import cv2
 import numpy as np
 
 import socketserver
-
-
-
-import multiprocessing.pool
-import functools
-
-def timeout(max_timeout):
-    """Timeout decorator, parameter in seconds."""
-    def timeout_decorator(item):
-        """Wrap the original function."""
-        @functools.wraps(item)
-        def func_wrapper(*args, **kwargs):
-            """Closure for function."""
-            pool = multiprocessing.pool.ThreadPool(processes=1)
-            async_result = pool.apply_async(item, args, kwargs)
-            # raises a TimeoutError if execution exceeds max_timeout
-            return async_result.get(max_timeout)
-        return func_wrapper
-    return timeout_decorator
-
-
-
-
-
+import time
 
 
 # Listen on
@@ -42,6 +19,16 @@ HOST = ''
 #HOST = '0.0.0.0'
 PORT = 9000
 
+
+
+def post_image(image_base_64): 
+    print('Sending photo:', time.time()) 
+    # send image
+    url = 'http://heimdall-backend:5000/api/live/'
+    data = {'image': image_base_64, 'annotate': 'True'}
+    requests.post(url, data=data)
+
+'''
 ### MQTT 
 #broker = 'mqtt-broker' 
 broker = os.environ.get('MQTT_BROKER_IP')
@@ -57,7 +44,7 @@ def post_image(image_base_64):
     print("============")
     print('Sending photo') 
     (result, mid) = client.publish("camera", image_base_64, mqttQos, mqttRetained)
-    print(result, ' - ', mid)
+    print('Result:', result, '- Mid:', mid)
 
 
 def on_connect(client, userdata, flags, rc): 
@@ -72,8 +59,8 @@ def on_message(client, userdata, msg):
     print("on_message: " + msg.topic + " " + payload) 
 
 def on_publish(client, obj, mid):
-    print("=========")
     print("Publish - Mid:", mid)
+    print("=========")
 
 def on_log(client, userdata, level, buf):
     print(level, buf)
@@ -98,18 +85,14 @@ client.connect(broker, 1883, 60)
 # client.loop_forever()    #  don't get past this 
 client.loop_start()    #  run in background and free up main thread
 
-
-
-import time
+'''
 
 
 class CameraTCPHandler(socketserver.BaseRequestHandler):
 
-    @timeout(2)  # if execution takes longer than X seconds, raise a TimeoutError
-    def handle(self):
-
+    # if execution takes longer than X seconds, raise a TimeoutError
+    def read(self):
         image = b''
-        print('Receiving data..')
         while True:
             # Receiving from client
             data = self.request.recv(4096)
@@ -117,9 +100,10 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
                 break
             #print("More data: " + str(sys.getsizeof(data)))
             image += data
-        print('Done Receiving!')
+        return image
 
-
+    def handle(self):
+        image = self.read()
         image = codecs.decode(image, "hex")
 
         #nparr = np.fromstring(image, np.uint8)
