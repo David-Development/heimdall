@@ -3,15 +3,23 @@
 # artful = 17.10
 FROM ubuntu:xenial 
 
+# Install all requirements for opencv
 RUN apt-get update \
     && apt-get install -y cmake pkg-config \
     && apt-get install -y libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev \
     && apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev \
     && apt-get install -y libgtk-3-dev libatlas-base-dev gfortran libboost-all-dev \
     && apt-get install -y wget unzip \
-    && apt-get install -y python2.7-dev python-tk python-pip \
-    && pip install --upgrade pip \
-    && pip install numpy psycopg2 \
+#    && apt-get install -y python2.7-dev python-tk python-pip \
+#    && pip install --upgrade pip \
+#    && pip install numpy psycopg2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python 3
+RUN    apt-get update \
+    && apt-get install -y python3-dev libpython3-dev python3-numpy python3-pip \
+    && python3 -m pip install --upgrade pip \
+    && python3 -m pip install numpy \
     && rm -rf /var/lib/apt/lists/*
 
 ENV opencv_version=3.3.0
@@ -44,38 +52,14 @@ RUN mkdir ~/opencv \
     && ldconfig \
     && rm -rf ~/opencv/*
 
-#RUN cd ~/envs/<virtuelenv>/lib/python2.7/site-packages/ \
-#    && ln -s /usr/local/lib/python2.7/site-packages/cv2.so cv2.so
 
-#WORKDIR /app/
 
-#RUN mkdir -p app/ml_models \
-#    && cd app/ml_models \
-#    && wget https://github.com/davisking/dlib-models/raw/master/dlib_face_recognition_resnet_model_v1.dat.bz2 \
-#    && wget https://github.com/davisking/dlib-models/raw/master/shape_predictor_68_face_landmarks.dat.bz2 \
-#    && bunzip2 dlib_face_recognition_resnet_model_v1.dat.bz2 \
-#    && bunzip2 shape_predictor_68_face_landmarks.dat.bz2
-#    #&& rm dlib_face_recognition_resnet_model_v1.dat.bz2 \
-#    #&& rm shape_predictor_68_face_landmarks.dat.bz2
+WORKDIR /
 
-# copy the requirements file over
-COPY ./heimdall-backend/requirements.txt requirements.txt
-RUN pip install -U -r requirements.txt \
-    && rm requirements.txt
-
-VOLUME ["/app"]
-WORKDIR /app/
-
-# Copy the files over
-#COPY ./heimdall/ .
-
-#RUN mv app/default_config_docker.py app/default_config.py
-
-#ENV PYTHONIOENCODING=utf8
-
-RUN apt-get update \
-    && apt-get install -y htop
-
-#CMD /bin/bash -c "ls -la /usr/local/lib/python2.7/site-packages/ ; ls -la ~/opencv/opencv-3.3.0/build/lib/"
-CMD /bin/bash -c "sh startDocker.sh"
-#CMD /bin/bash -c "celery worker --detach -A celery_worker.celery --loglevel=info; python manage.py run"
+# Test OpenCV Python Installation
+RUN echo 'import cv2\n\
+print("OpenCV Version: %s" % cv2.__version__)\n\
+\n'\
+>> /test.py \
+    && python3 /test.py \
+    && rm /test.py
