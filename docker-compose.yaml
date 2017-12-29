@@ -172,7 +172,7 @@ services:
       - heimdall-frontend
       - mqtt-broker
     ports:
-      - "8080:80"
+      - "80:80"
       - "8083:8083"
   
 
