@@ -3,6 +3,10 @@
 
 # TODO
 
+- [ ] only show images with one person (in classification view)
+- [ ] Test resized images from API / Add special api for resized images
+- [ ] Update API access to use the getImagUrl from HTTPClient
+- [ ] API Endpoint /events very slow
 - [x] Update Mosquitto to 1.4.14
 - [ ] [Facial blur detection](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) - Remove blurry images
 - [ ] Check exposed ports in [Dockerfiles / Docker-Compose](https://stackoverflow.com/a/22150099)
