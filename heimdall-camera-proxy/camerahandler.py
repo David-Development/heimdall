@@ -26,7 +26,7 @@ def post_image(image_base_64):
     # send image
     url = 'http://heimdall-backend:5000/api/live/'
     data = {'image': image_base_64, 'annotate': 'True'}
-    requests.post(url, data=data)
+    requests.post(url, data=data, timeout=0.5)
 
 '''
 ### MQTT 
@@ -90,7 +90,6 @@ client.loop_start()    #  run in background and free up main thread
 
 class CameraTCPHandler(socketserver.BaseRequestHandler):
 
-    # if execution takes longer than X seconds, raise a TimeoutError
     def read(self):
         image = b''
         while True:
@@ -103,6 +102,7 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
         return image
 
     def handle(self):
+        self.request.settimeout(2)
         image = self.read()
         image = codecs.decode(image, "hex")
 
