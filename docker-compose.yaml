@@ -18,6 +18,8 @@ services:
       dockerfile: Dockerfile.backend
     #restart: always
     #mem_limit: 4096m #2048m
+    environment:
+      - ENABLE_LIVEVIEW=False
     image: luhmer/heimdall-backend
     volumes:
       - "./heimdall-backend:/app/"
