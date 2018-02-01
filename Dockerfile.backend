@@ -14,7 +14,7 @@ FROM luhmer/opencv-python3
 
 # TODO install lib-boost in the first step of the luhmer/opencv-python3
 RUN apt-get update \
-    && apt-get install -y htop libboost-all-dev \
+    && apt-get install -y git tzdata libboost-all-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # copy the requirements file over
@@ -25,13 +25,8 @@ RUN pip3 install -U -r requirements.txt \
 VOLUME ["/app"]
 WORKDIR /app/
 
-#ENV PYTHONIOENCODING=utf8
-
-
 # matplotlib config (used by benchmark)
-RUN mkdir -p /root/.config/matplotlib
-RUN echo "backend : Agg" > /root/.config/matplotlib/matplotlibrc
+RUN mkdir -p /root/.config/matplotlib \
+    && echo "backend : Agg" > /root/.config/matplotlib/matplotlibrc
 
-
-#CMD /bin/bash -c "ls -la /usr/local/lib/python2.7/site-packages/ ; ls -la ~/opencv/opencv-3.3.0/build/lib/"
 CMD /bin/bash -c "sh startDocker.sh"
