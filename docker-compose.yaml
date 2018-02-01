@@ -139,24 +139,23 @@ services:
   # http://emqttd-docs.readthedocs.io/en/latest/getstarted.html#web-dashboard
   # Check ports: http://localhost:18083/#/listeners
   #mqtt-broker:
+  #  container_name: mqtt-broker
   #  build: emq_docker
   #  image: emq
+  #  environment:
+  #    - TZ=${TIMEZONE}
+  #    - EMQ_MQTT__MAX_PACKET_SIZE=256MB ## Max Packet Size Allowed, 64K by default. Max size is 256MB.
   #  ports:
   #    - "1883:1883/tcp"   # mqtt
-  #    - "8083:8083/tcp"   # websockets
+  #  #  - "8083:8083/tcp"   # websockets
   #    - "18083:18083/tcp" # emq webinterface
 
   mqtt-broker:
     container_name: mqtt-broker
-    #build: 
-    #  context: ./docker-mosquitto
-    #  dockerfile: Dockerfile
-    #image: jllopis/mosquitto:v1.4.14
     image: eclipse-mosquitto:1.4.12
     environment:
       - TZ=${TIMEZONE}
     volumes:
-      #- ./mosquitto/mosquitto.conf:/etc/mosquitto/mosquitto.conf:ro # jllopis/mosquitto container
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # eclipse-mosquitto container
     ports:
       - "1883:1883/tcp"   # mqtt
