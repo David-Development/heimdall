@@ -19,6 +19,7 @@ services:
     #restart: always
     #mem_limit: 4096m #2048m
     environment:
+      - TZ=${TIMEZONE}
       - ENABLE_LIVEVIEW=False
     image: luhmer/heimdall-backend
     volumes:
@@ -35,14 +36,15 @@ services:
     image: postgres
     #ports:
     #  - "5432:5432" # required for pgstudio
-    environment: 
+    environment:
+      - TZ=${TIMEZONE}
       # This optional environment variable can be used to define a different name for the default database that is created when the image is first started. If it is not specified, then the value of POSTGRES_USER will be used.
       - POSTGRES_DB=heimdall
       # If it is not specified, then the default user of 'postgres' will be used.
       - POSTGRES_USER=heimdall 
       # This environment variable sets the superuser password for PostgreSQL. The default superuser is defined by the POSTGRES_USER environment variable
       - POSTGRES_PASSWORD=heimdall
-
+  
   redis:
     image: redis
     ports:
@@ -56,6 +58,8 @@ services:
     image: luhmer/heimdall-frontend
     volumes:
       - "./heimdall-frontend/:/app/"
+    environment:
+      - TZ=${TIMEZONE}
     #ports:
     #  - "5001:3000/tcp"
 
@@ -72,6 +76,8 @@ services:
     #  - HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
     #  - MQTT_BROKER_IP=mqtt-broker # Inside same docker-compose
     #  - MQTT_BROKER_IP=192.168.10.53
+    environment:
+      - TZ=${TIMEZONE}
     depends_on:
       - mqtt-broker
     networks: 
@@ -87,6 +93,8 @@ services:
       context: .
       dockerfile: Dockerfile.ffmpeg-h264-stream
     image: heimdall/ffmpeg-h264-stream
+    environment:
+      - TZ=${TIMEZONE}
     volumes:
       - "./ffmpeg-h264-stream/:/app/"
     ports:
@@ -98,6 +106,8 @@ services:
     build:
       context: mock_rest_api
     image: luhmer/json-server
+    environment:
+      - TZ=${TIMEZONE}
     volumes:
       - "./mock_rest_api/mock_data.json:/data/db.json"
       - "./mock_rest_api/images/:/usr/local/lib/node_modules/json-server/lib/server/public/images/"
@@ -110,6 +120,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.backend
+    environment:
+      - TZ=${TIMEZONE}
     volumes:
       - "./mock_camera/startDocker.sh:/app/startDocker.sh" 
       - "./mock_camera/mqttCamera.py:/app/mqttCamera.py" 
@@ -141,6 +153,8 @@ services:
     #  dockerfile: Dockerfile
     #image: jllopis/mosquitto:v1.4.14
     image: eclipse-mosquitto:1.4.12
+    environment:
+      - TZ=${TIMEZONE}
     volumes:
       #- ./mosquitto/mosquitto.conf:/etc/mosquitto/mosquitto.conf:ro # jllopis/mosquitto container
       - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # eclipse-mosquitto container
@@ -166,6 +180,8 @@ services:
   heimdall-proxy:
     container_name: proxy
     image: nginx
+    environment:
+      - TZ=${TIMEZONE}
     volumes:
       - ./nginx-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx-proxy/frontend:/usr/share/nginx/html:ro
