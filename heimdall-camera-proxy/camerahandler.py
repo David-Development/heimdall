@@ -12,6 +12,7 @@ import numpy as np
 
 import socketserver
 import time
+from datetime import datetime
 
 
 # Listen on
@@ -22,11 +23,15 @@ PORT = 9000
 
 
 def post_image(image_base_64): 
-    print('Sending photo:', time.time()) 
+    print('Sending photo:', datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) 
     # send image
     url = 'http://heimdall-backend:5000/api/live/'
     data = {'image': image_base_64, 'annotate': 'True'}
-    requests.post(url, data=data, timeout=0.5)
+    
+    try:
+        requests.post(url, data=data, timeout=1.0)
+    except requests.exceptions.ReadTimeout as e:
+        print("ReadTimeout: Heimdall backend not responding on time!")
 
 '''
 ### MQTT 
@@ -103,18 +108,19 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         self.request.settimeout(2)
-        image = self.read()
-        image = codecs.decode(image, "hex")
 
-        #nparr = np.fromstring(image, np.uint8)
-        #image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        #_, image = cv2.imencode('.jpg', image)
-        #cv2.imwrite('test.jpg', image)
-
-        # send image
-        image_base_64 = base64.b64encode(image)
-        post_image(image_base_64)
+        try:
+            image = self.read()
+            image = codecs.decode(image, "hex")
+            
+            #nparr = np.fromstring(image, np.uint8)
+            #image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            
+            # send image
+            image_base_64 = base64.b64encode(image)
+            post_image(image_base_64)
+        except socket.timeout as te:
+            print("Timeout Exception: Looks like the camera closed the connection")
 
 
 
