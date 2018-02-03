@@ -10,9 +10,6 @@ RUN apt-get update \
     && apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev \
     && apt-get install -y libgtk-3-dev libatlas-base-dev gfortran libboost-all-dev \
     && apt-get install -y wget unzip \
-#    && apt-get install -y python2.7-dev python-tk python-pip \
-#    && pip install --upgrade pip \
-#    && pip install numpy psycopg2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python 3
@@ -41,7 +38,7 @@ RUN mkdir ~/opencv \
         -D ENABLE_FAST_MATH=1 \
         #-D CUDA_FAST_MATH=1 \
         #-D WITH_CUBLAS=1 \
-        #-D INSTALL_PYTHON_EXAMPLES=ON \
+        -D INSTALL_PYTHON_EXAMPLES=OFF \
         -D BUILD_PYTHON_SUPPORT=ON \
         #-D BUILD_SHARED_LIBS=OFF \
         -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-${opencv_version}/modules \
