@@ -6,30 +6,6 @@
 
 - Follow installation instructions on [docs.docker.com](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository)
 
-## Installation of Heimdall
-
-```sh
-cd /home/heimdall/Desktop
-git clone https://github.com/David-Development/heimdall.git
-#git clone --recursive https://github.com/David-Development/heimdall.git
-cd heimdall
-sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
-```
-
-### Setup Heimdall to start while booting
-
-- `sudo nano /etc/rc.local`
-- Append the following code snippet (before the `exit 0` line)
-
-```sh
-sh /home/heimdall/Desktop/heimdall/startHeimdall.sh > /home/heimdall/Desktop/heimdall-log.txt 2>&1 &
-exit 0
-```
-
-#### Access log file
-
-`tail -f -n 100 heimdall-log.txt`
-
 ## Setup Camera (developed at the Bonn-Rhein-Sieg University)
 
 - Camera has a fixed IP adress: `192.168.1.177`
@@ -56,6 +32,38 @@ sudo nano /etc/dhcp/dhcpd.conf
 
 sudo service isc-dhcp-server restart
 ```
+
+## Pull Heimdall Docker Images
+
+```sh
+docker pull luhmer/opencv-python3
+docker pull luhmer/heimdall-backend
+docker pull luhmer/heimdall-frontend
+```
+
+## Installation of Heimdall
+
+```sh
+cd /home/heimdall/Desktop
+git clone --recursive https://github.com/David-Development/heimdall.git
+cd heimdall
+sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
+```
+
+### Setup Heimdall to start while booting
+
+- `sudo nano /etc/rc.local`
+- Append the following code snippet (before the `exit 0` line)
+
+```sh
+sh /home/heimdall/Desktop/heimdall/startHeimdall.sh > /home/heimdall/Desktop/heimdall-log.txt 2>&1 &
+exit 0
+```
+
+#### Access log file
+
+`tail -f -n 100 heimdall-log.txt`
+
 
 ## Optional (Not required anymore)
 
@@ -107,6 +115,7 @@ cat /proc/sys/net/ipv6/conf/all/disable_ipv6 # check
 
 ```sh
 git pull
+git submodule init
 git submodule update --recursive --remote
 ```
 
