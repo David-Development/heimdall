@@ -7,6 +7,12 @@ WORKDIR /usr/src/app
 
 RUN pip install requests paho-mqtt
 
+RUN apt-get update \
+    && apt-get install -y git tzdata \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY ./heimdall-camera-proxy/ .
 
-CMD [ "python3", "-u", "./camerahandler.py" ]
+CMD bash -c "ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
+          && dpkg-reconfigure -f noninteractive tzdata\
+          && python3 -u ./camerahandler.py"
