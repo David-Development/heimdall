@@ -2,10 +2,6 @@
 
 - System was tested on XUbuntu 16.04.3
 
-## Install Docker & Docker Compose
-
-- Follow installation instructions on [docs.docker.com](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository)
-
 ## Setup Camera (developed at the Bonn-Rhein-Sieg University)
 
 - Camera has a fixed IP adress: `192.168.1.177`
@@ -33,6 +29,17 @@ sudo nano /etc/dhcp/dhcpd.conf
 sudo service isc-dhcp-server restart
 ```
 
+## Clone this repo
+
+```sh
+cd /home/heimdall/Desktop
+git clone --recursive https://github.com/David-Development/heimdall.git
+```
+
+## Install Docker & Docker Compose
+
+- Run `installDocker.sh` file from the root of the heimdall project or follow the installation instructions on [docs.docker.com](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository)
+
 ## Pull Heimdall Docker Images
 
 ```sh
@@ -44,9 +51,7 @@ docker pull luhmer/heimdall-frontend
 ## Installation of Heimdall
 
 ```sh
-cd /home/heimdall/Desktop
-git clone --recursive https://github.com/David-Development/heimdall.git
-cd heimdall
+cd /home/heimdall/Desktop/heimdall
 sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
 ```
 
