@@ -32,6 +32,8 @@ def post_image(image_base_64):
         requests.post(url, data=data, timeout=1.0)
     except requests.exceptions.ReadTimeout as e:
         print("ReadTimeout: Heimdall backend not responding on time!")
+    except (urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError) as e:
+        print("NewConnectionError: Heimdall backend not responding!")
 
 '''
 ### MQTT 
