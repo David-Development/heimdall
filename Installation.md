@@ -52,6 +52,7 @@ docker pull luhmer/heimdall-frontend
 
 ```sh
 cd /home/heimdall/Desktop/heimdall
+sudo nano startHeimdall.sh # replace the WIFI_DEVICE_ID with your wifi hotspot device id and set the WIFI_SSID as well as the WIFI_PASSWORD variable accordingly.
 sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
 ```
 
