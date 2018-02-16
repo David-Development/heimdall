@@ -100,7 +100,13 @@ cat /proc/sys/net/ipv6/conf/all/disable_ipv6 # check
 
 `sudo netstat -tulpn`
 
-## Install TeamViewer on Ubuntu 17.10
+## Install TeamViewer (on Ubuntu 16.04.3)
+
+```sh
+sudo sh installTeamviewer.sh
+```
+
+### Install TeamViewer on Ubuntu 17.10
 
 - Set default password
 - disable wayland support
