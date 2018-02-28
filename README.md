@@ -18,6 +18,7 @@ Installation and Usage Instructions can be found in the [corresponding Installat
 
 # TODO
 
+- [ ] Disable redis public port
 - [ ] only show images with one person (in classification view)
 - [ ] Test resized images from API / Add special api for resized images
 - [ ] Update API access to use the getImagUrl from HTTPClient
