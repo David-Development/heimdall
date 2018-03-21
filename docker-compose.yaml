@@ -78,8 +78,8 @@ services:
     #  - MQTT_BROKER_IP=192.168.10.53
     environment:
       - TZ=${TIMEZONE}
-    depends_on:
-      - mqtt-broker
+    #depends_on:
+    #  - mqtt-broker
     networks: 
       - bridge-iot
       - default

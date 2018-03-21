@@ -5,11 +5,12 @@ import threading
 import requests
 import os
 import codecs
-import paho.mqtt.client as mqtt
+# import paho.mqtt.client as mqtt
 
 import cv2
 import numpy as np
 
+import urllib3
 import socketserver
 import time
 from datetime import datetime
