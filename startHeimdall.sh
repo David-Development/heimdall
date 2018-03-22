@@ -11,7 +11,7 @@ systemctl disable bluetooth.service
 service bluetooth status
 
 # Go to heimdall location
-cd ~/Desktop/heimdall
+cd /home/heimdall/Desktop/heimdall
 
 # Read config
 export `cat env.vars`
