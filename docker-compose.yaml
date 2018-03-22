@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
 
@@ -16,14 +16,12 @@ services:
     build:
       context: ./heimdall-backend
       dockerfile: Dockerfile
-    #restart: always
-    #mem_limit: 4096m #2048m
     environment:
       - TZ=${TIMEZONE}
       - ENABLE_LIVEVIEW=False
     image: luhmer/heimdall-backend
-    volumes:
-      - "./heimdall-backend:/app/"
+#    volumes:
+#      - "./heimdall-backend:/app/" # Overlay (for faster development)
     depends_on:
       - mqtt-broker
       - postgres
