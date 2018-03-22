@@ -84,7 +84,7 @@ services:
       - bridge-iot
       - default
     ports:
-      - "9000:9000"
+      - "0.0.0.0:9000:9000"
       
 
   ffmpeg_h264_stream:
@@ -149,9 +149,8 @@ services:
       - bridge-iot
       - default
     ports:
-      - "1883:1883/tcp"   # mqtt
-    #  - "8083:8083/tcp"   # websockets
-      - "18083:18083/tcp" # emq webinterface  
+      - "0.0.0.0:1883:1883/tcp"   # mqtt
+      - "0.0.0.0:18083:18083/tcp" # emq webinterface  
 
   #mqtt-broker:
   #  container_name: mqtt-broker
@@ -162,7 +161,6 @@ services:
   #    - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro # eclipse-mosquitto container
   #  ports:
   #    - "1883:1883/tcp"   # mqtt
-  #  #  - "8083:8083/tcp"   # websockets
   #    - "9001:9001/tcp"   # mosquitto
 
 
@@ -195,8 +193,8 @@ services:
       - bridge-iot
       - default
     ports:
-      - "80:80"
-      - "8083:8083"
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:8083:8083"
   
 
 
