@@ -8,6 +8,8 @@ fi
 WIFI_DEVICE_ID="wlx8416f9176c99"
 WIFI_SSID="ssid"
 WIFI_PASSWORD="password"
+# Stop/Disable Bluetooth (not needed)
+service bluetooth stop
 
 echo "___________"
 echo "Setup Wifi - Using Device: $WIFI_DEVICE_ID"
