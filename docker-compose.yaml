@@ -14,8 +14,8 @@ services:
   heimdall-backend: 
     container_name: heimdall-backend
     build:
-      context: .
-      dockerfile: Dockerfile.backend
+      context: ./heimdall-backend
+      dockerfile: Dockerfile
     #restart: always
     #mem_limit: 4096m #2048m
     environment:
@@ -52,16 +52,26 @@ services:
 
   heimdall-frontend:
     container_name: heimdall-frontend
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
     image: luhmer/heimdall-frontend
-    volumes:
-      - "./heimdall-frontend/:/app/"
+    build:
+      context: ./heimdall-frontend
+      dockerfile: Dockerfile
+#      args:
+#        NODE_ENV: dev # This line is required for dev mode
+#    command: /bin/sh -c "cd /app/dev/ && yarn install --modules-folder .. && yarn start" # This line is required for dev mode
+#    volumes: # This line is required for dev mode
+#      - "./heimdall-frontend/:/app/dev/" # This line is required for dev mode
     environment:
       - TZ=${TIMEZONE}
-    #ports:
-    #  - "5001:3000/tcp"
+#    ports:
+#      - "3000:3000/tcp"
+    
+
+#  heimdall-frontend:
+#    container_name: heimdall-frontend
+#    image: nginx
+#    volumes:
+#      - "./heimdall-frontend/:/usr/share/nginx/html:ro"
 
   heimdall-camera-proxy:
     container_name: heimdall-camera-proxy
@@ -184,7 +194,6 @@ services:
       - TZ=${TIMEZONE}
     volumes:
       - ./nginx-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx-proxy/frontend:/usr/share/nginx/html:ro
     depends_on:
       - heimdall-backend
       - heimdall-frontend
