@@ -6,7 +6,12 @@ if [ `whoami` != root ]; then
 fi
 
 # Stop/Disable Bluetooth (not needed)
-service bluetooth stop
+systemctl stop bluetooth.service
+systemctl disable bluetooth.service
+service bluetooth status
+
+# Go to heimdall location
+cd /home/david/Desktop/heimdall
 
 # Read config
 export `cat env.vars`
@@ -40,5 +45,4 @@ docker network rm bridge-iot
 docker network create -o "com.docker.network.bridge.host_binding_ipv4"="192.168.1.177" bridge-iot
 
 echo "\r\n___________\r\nStarting docker container.."
-cd /home/david/Schreibtisch/heimdall
 docker-compose up heimdall-backend heimdall-frontend heimdall-proxy heimdall-camera-proxy
