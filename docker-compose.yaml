@@ -145,6 +145,9 @@ services:
     environment:
       - TZ=${TIMEZONE}
       - EMQ_MQTT__MAX_PACKET_SIZE=256MB ## Max Packet Size Allowed, 64K by default. Max size is 256MB.
+    networks: 
+      - bridge-iot
+      - default
     ports:
       - "1883:1883/tcp"   # mqtt
     #  - "8083:8083/tcp"   # websockets
@@ -188,6 +191,9 @@ services:
       - heimdall-backend
       - heimdall-frontend
       - mqtt-broker
+    networks: 
+      - bridge-iot
+      - default
     ports:
       - "80:80"
       - "8083:8083"
