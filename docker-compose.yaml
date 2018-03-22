@@ -149,7 +149,7 @@ services:
   mqtt-broker:
     container_name: mqtt-broker
     build: emq_docker
-    image: emq
+    image: luhmer/emqtt
     environment:
       - TZ=${TIMEZONE}
       - EMQ_MQTT__MAX_PACKET_SIZE=256MB ## Max Packet Size Allowed, 64K by default. Max size is 256MB.
