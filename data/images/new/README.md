@@ -1,0 +1,1 @@
+Images of new and unsorted subjects are saved in this folder

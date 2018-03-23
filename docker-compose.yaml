@@ -20,6 +20,9 @@ services:
       - TZ=${TIMEZONE}
       - ENABLE_LIVEVIEW=False
     image: luhmer/heimdall-backend
+    volumes:
+      - "./data/images:/app/heimdall/images/"
+      - "./data/ml_models:/app/heimdall/ml_models/"
 #    volumes:
 #      - "./heimdall-backend:/app/" # Overlay (for faster development)
     depends_on:
