@@ -46,6 +46,7 @@ git clone --recursive https://github.com/David-Development/heimdall.git
 docker pull luhmer/opencv-python3
 docker pull luhmer/heimdall-backend
 docker pull luhmer/heimdall-frontend
+docker pull luhmer/emqtt
 ```
 
 ## Installation of Heimdall

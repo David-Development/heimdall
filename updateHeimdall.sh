@@ -10,6 +10,7 @@ docker-compose stop
 docker pull luhmer/opencv-python3
 docker pull luhmer/heimdall-backend
 docker pull luhmer/heimdall-frontend
+docker pull luhmer/emqtt
 
 git pull
 git submodule init
