@@ -1,3 +1,6 @@
 *.DS_Store
 ffmpeg-h264-stream/node_modules/*
 *.jpg
+data/images/model_plots/*.png
+data/ml_models/*.pkl
+data/ml_models/*.dat
