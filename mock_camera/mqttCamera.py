@@ -25,6 +25,8 @@ mqttRetained = False
 
 
 fileList = os.listdir("images")
+fileList.sort()
+fileList.reverse()
 
 #
 def on_connect(client, userdata, flags, rc): 
