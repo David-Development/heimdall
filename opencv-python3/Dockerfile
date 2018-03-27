@@ -10,7 +10,7 @@ RUN apt-get update \
     && python3 -m pip install --no-cache-dir numpy \
     && rm -rf /var/lib/apt/lists/*
 
-ENV opencv_version=3.4.0
+ENV opencv_version=3.4.1
 
 # Install all requirements for opencv
 RUN apt-get update \
