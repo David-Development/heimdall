@@ -129,8 +129,8 @@ services:
   mock-camera:
     container_name: mock-camera
     build:
-      context: .
-      dockerfile: Dockerfile.backend
+      context: ./heimdall-backend
+      dockerfile: Dockerfile
     environment:
       - TZ=${TIMEZONE}
     volumes:
