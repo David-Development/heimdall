@@ -20,8 +20,8 @@ Installation and Usage Instructions can be found in the [corresponding Installat
 
 - UI
   - [ ] Improve visibility of progressbar in React App (training progress)
-  - Blue mark stays on even after classifying an image 
-- Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
+  - [ ] Blue mark stays on even after classifying an image 
+- [ ] Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
 - [ ] Implement some kind of housekeeping operation (delete old images) e.g.
   - after a training delete all images (good for performance)
   - delete images that are older than 10 days
