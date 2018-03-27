@@ -3,6 +3,15 @@
 # artful = 17.10
 FROM ubuntu:xenial 
 
+
+# Set the locale to support proper utf-8 encoding in Python3
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y locales && rm -rf /var/lib/apt/lists/*
+RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+    dpkg-reconfigure --frontend=noninteractive locales && \
+    update-locale LANG=en_US.UTF-8
+ENV LANG en_US.UTF-8
+
+
 # Install Python3, Pip, Numpy, wget and unzip
 RUN apt-get update \
     && apt-get install -y python3-dev python3-pip python3-numpy wget unzip \
@@ -18,6 +27,7 @@ RUN apt-get update \
     && apt-get install -y libjpeg8-dev libtiff5-dev libjasper-dev libpng12-dev \
     && apt-get install -y libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev \
     && apt-get install -y libgtk-3-dev libatlas-base-dev gfortran libboost-all-dev
+
 
 RUN mkdir ~/opencv \
     && cd ~/opencv \
