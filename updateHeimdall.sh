@@ -1,7 +1,7 @@
 #! /bin/sh
 
-if [ `whoami` != root ]; then
-    echo Please run this script as root or using sudo
+if [ `whoami` == root ]; then
+    echo "Please do not run this script as root or using sudo"
     exit
 fi
 
