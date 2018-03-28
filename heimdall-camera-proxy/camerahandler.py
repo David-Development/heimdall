@@ -107,6 +107,14 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
                 break
             #print("More data: " + str(sys.getsizeof(data)))
             image += data
+        
+
+        voltage = float(image[-4:])
+        print(" ")
+        #print(image[-30:])
+        print("Voltage:", voltage)
+        image = image[:-4].strip()
+        #print(image[-30:])
         return image
 
     def handle(self):
