@@ -40,6 +40,16 @@ git clone --recursive https://github.com/David-Development/heimdall.git
 
 - Run `installDocker.sh` file from the root of the heimdall project or follow the installation instructions on [docs.docker.com](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository)
 
+## Give non-root user permission to execute docker
+
+```
+sudo groupadd docker
+sudo usermod -aG docker $USER # Add sudo to group docker
+sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
+sudo chmod g+rwx "/home/$USER/.docker" -R
+reboot
+```
+
 ## Pull Heimdall Docker Images
 
 ```sh
