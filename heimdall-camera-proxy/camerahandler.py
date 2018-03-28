@@ -108,12 +108,13 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
             #print("More data: " + str(sys.getsizeof(data)))
             image += data
         
-
-        voltage = float(image[-4:])
+        number_of_bytes = 3
+        voltage = int(image[-number_of_bytes:]) / 100.0
         print(" ")
-        #print(image[-30:])
+        #print("Voltage RAW:", image[-number_of_bytes:])
         print("Voltage:", voltage)
-        image = image[:-4].strip()
+        #print(image[-30:])
+        image = image[:-number_of_bytes].strip()
         #print(image[-30:])
         return image
 
