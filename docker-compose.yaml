@@ -102,7 +102,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ffmpeg-h264-stream
-    image: heimdall/ffmpeg-h264-stream
     environment:
       - TZ=${TIMEZONE}
     volumes:
