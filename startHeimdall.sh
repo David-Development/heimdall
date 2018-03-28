@@ -38,9 +38,16 @@ ifconfig "$WIFI_DEVICE_ID" 192.168.1.177 netmask 255.255.255.0
 echo "\r\n___________\r\nRestart DHCP-Server"
 service isc-dhcp-server restart
 
+
+echo "\r\n___________\r\nWorkaround for annoying Docker bug.. network is not binding properly.. therefore we need to recreate it.. but first.. remove containers that depend on the network"
+docker-compose stop  heimdall-proxy mqtt-broker heimdall-camera-proxy
+docker-compose rm -f heimdall-proxy mqtt-broker heimdall-camera-proxy
+
+
 echo "\r\n___________\r\nRecreating bridge network for camera"
 
 # Since the default network bridge network create by docker does not have a proper IPv4 Binding, the camera can't access it via the Hotspot
+docker network ls --no-trunc
 docker network rm bridge-iot
 docker network create -o "com.docker.network.bridge.host_binding_ipv4"="192.168.1.177" bridge-iot
 
