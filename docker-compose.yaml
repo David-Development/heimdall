@@ -19,7 +19,7 @@ services:
     environment:
       - TZ=${TIMEZONE}
       - ENABLE_LIVEVIEW=False
-    image: luhmer/heimdall-backend
+    image: luhmer/heimdall-backend:v1.0
     volumes:
       - "./data/images:/app/heimdall/images/"
       - "./data/ml_models:/app/heimdall/ml_models/"
@@ -53,7 +53,7 @@ services:
 
   heimdall-frontend:
     container_name: heimdall-frontend
-    image: luhmer/heimdall-frontend
+    image: luhmer/heimdall-frontend:v1.0
     build:
       context: ./heimdall-frontend
       dockerfile: Dockerfile
@@ -152,7 +152,7 @@ services:
   mqtt-broker:
     container_name: mqtt-broker
     build: emq_docker
-    image: luhmer/emqtt
+    image: luhmer/emqtt:v2.3.5
     environment:
       - TZ=${TIMEZONE}
       - EMQ_MQTT__MAX_PACKET_SIZE=256MB ## Max Packet Size Allowed, 64K by default. Max size is 256MB.
