@@ -7,3 +7,6 @@
 [submodule "emq_docker"]
 	path = emq_docker
 	url = https://github.com/David-Development/emq-docker.git
+[submodule "opencv-python3"]
+	path = opencv-python3
+	url = https://github.com/David-Development/opencv-python3.git
