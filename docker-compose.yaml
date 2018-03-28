@@ -76,9 +76,7 @@ services:
 
   heimdall-camera-proxy:
     container_name: heimdall-camera-proxy
-    build:
-      context: .
-      dockerfile: Dockerfile.camera-proxy
+    image: luhmer/heimdall-backend:v1.0
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
     #environment:
