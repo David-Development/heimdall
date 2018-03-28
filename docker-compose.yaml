@@ -79,7 +79,7 @@ services:
     image: luhmer/heimdall-backend:v1.0
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
-    command: pip install requests urllib3 && python3 -u ./camerahandler.py
+    command: python3 -u /usr/src/app/camerahandler.py
     #environment:
     #  - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
     #  - HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
