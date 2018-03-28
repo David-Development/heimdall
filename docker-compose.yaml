@@ -81,7 +81,6 @@ services:
       dockerfile: Dockerfile.camera-proxy
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
-    image: luhmer/heimdall-camera-proxy
     #environment:
     #  - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
     #  - HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP
@@ -116,7 +115,6 @@ services:
     container_name: mock-rest-api
     build:
       context: mock_rest_api
-    image: luhmer/json-server
     environment:
       - TZ=${TIMEZONE}
     volumes:
