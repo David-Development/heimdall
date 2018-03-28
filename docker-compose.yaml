@@ -178,11 +178,11 @@ services:
   #   user: heimdall
   #   pass: heimdall
   #   database: heimdall
-  pgstudio:
-    container_name: pgstudio
-    image: lukasmartinelli/pgstudio
-    ports:
-      - "8080:8080"
+#  pgstudio:
+#    container_name: pgstudio
+#    image: lukasmartinelli/pgstudio
+#    ports:
+#      - "8080:8080"
 
 
   heimdall-proxy:
