@@ -9,7 +9,7 @@
   - `nmcli device` # List of Network Devices
   - `nmcli device wifi` # List of Wifi Devices (inkl. )
   - `nmcli device show`
-- **Run the commands below - Replace `<wifi_device_id>` with the correct wifi device id**
+- **Run the commands below - Replace `<wifi_device_id>` with the correct identifier of your wifi card that you want to use**
 
 ```sh
 sudo apt-get install isc-dhcp-server
