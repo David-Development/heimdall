@@ -100,18 +100,20 @@ client.loop_start()    #  run in background and free up main thread
 
 class CameraTCPHandler(socketserver.BaseRequestHandler):
 
+    # Read single image from camera
     def read(self):
         image = b''
         while True:
-            # Receiving from client
+            # Receiving from camera
             data = self.request.recv(4096)
             if not data:
                 break
-            #print("More data: " + str(sys.getsizeof(data)))
+            # print("More data: {}".format(sys.getsizeof(data)))
             image += data
         
-        number_of_bytes = 3
-        voltage = int(image[-number_of_bytes:]) / 100.0
+        # extract voltage from received bytes
+        number_of_bytes = 3  # number of bytes allocated for transmitting the voltage
+        voltage = int(image[-number_of_bytes:]) / 100.0  # extract last 3 bytes and divide by 100 (e.g. 4.0 Volt is send as 400)
         print(" ")
         #print("Voltage RAW:", image[-number_of_bytes:])
         print("Voltage:", voltage)
@@ -124,13 +126,13 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
         self.request.settimeout(CAMERA_READ_TIMEOUT)
 
         try:
-            image = self.read()
-            image = codecs.decode(image, "hex")
+            image = self.read()  # read image
+            image = codecs.decode(image, "hex")  # decode image from hex
             
             #nparr = np.fromstring(image, np.uint8)
             #image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             
-            # send image
+            # send image to the heimdall backend
             image_base_64 = base64.b64encode(image)
             post_image(image_base_64)
         except socket.timeout as te:
