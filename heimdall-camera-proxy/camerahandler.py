@@ -21,6 +21,8 @@ HOST = ''
 #HOST = '0.0.0.0'
 PORT = 9000
 
+CAMERA_READ_TIMEOUT  = 4  # seconds
+BACKEND_SEND_TIMEOUT = 1  # seconds
 
 
 def post_image(image_base_64): 
@@ -30,7 +32,7 @@ def post_image(image_base_64):
     data = {'image': image_base_64, 'annotate': 'True'}
     
     try:
-        requests.post(url, data=data, timeout=1.0)
+        requests.post(url, data=data, timeout=BACKEND_SEND_TIMEOUT)
     except requests.exceptions.ReadTimeout as e:
         print("ReadTimeout: Heimdall backend not responding on time!")
     except (urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError) as e:
@@ -119,7 +121,7 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
         return image
 
     def handle(self):
-        self.request.settimeout(2)
+        self.request.settimeout(CAMERA_READ_TIMEOUT)
 
         try:
             image = self.read()
