@@ -109,13 +109,18 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
             image += data
         
         number_of_bytes = 3
-        voltage = int(image[-number_of_bytes:]) / 100.0
-        print(" ")
-        #print("Voltage RAW:", image[-number_of_bytes:])
-        print("Voltage:", voltage)
-        #print(image[-30:])
-        image = image[:-number_of_bytes].strip()
-        #print(image[-30:])
+        last_bytes = image[-number_of_bytes:]
+        if last_bytes == b"fd9":  # if the data ends with the magic bytes from jpeg
+            print("No voltage found..")
+        else:  # extract voltage
+            voltage = int(last_bytes) / 100.0
+            print(" ")
+            #print("Voltage RAW:", image[-number_of_bytes:])
+            print("Voltage:", voltage)
+            #print(image[-30:])
+            image = image[:-number_of_bytes].strip()
+            #print(image[-30:])
+            
         return image
 
     def handle(self):
