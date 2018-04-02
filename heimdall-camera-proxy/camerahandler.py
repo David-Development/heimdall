@@ -21,6 +21,8 @@ HOST = ''
 #HOST = '0.0.0.0'
 PORT = 9000
 
+CAMERA_READ_TIMEOUT  = 4  # seconds
+BACKEND_SEND_TIMEOUT = 1  # seconds
 
 
 def post_image(image_base_64): 
@@ -30,7 +32,7 @@ def post_image(image_base_64):
     data = {'image': image_base_64, 'annotate': 'True'}
     
     try:
-        requests.post(url, data=data, timeout=1.0)
+        requests.post(url, data=data, timeout=BACKEND_SEND_TIMEOUT)
     except requests.exceptions.ReadTimeout as e:
         print("ReadTimeout: Heimdall backend not responding on time!")
     except (urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError) as e:
@@ -98,18 +100,20 @@ client.loop_start()    #  run in background and free up main thread
 
 class CameraTCPHandler(socketserver.BaseRequestHandler):
 
+    # Read single image from camera
     def read(self):
         image = b''
         while True:
-            # Receiving from client
+            # Receiving from camera
             data = self.request.recv(4096)
             if not data:
                 break
-            #print("More data: " + str(sys.getsizeof(data)))
+            # print("More data: {}".format(sys.getsizeof(data)))
             image += data
-        
-        number_of_bytes = 3
-        last_bytes = image[-number_of_bytes:]
+
+        # extract voltage from received bytes
+        number_of_bytes = 3  # number of bytes allocated for transmitting the voltage
+        last_bytes = image[-number_of_bytes:] # extract last x bytes and divide by 100 (e.g. 4.0 Volt is send as 400)
         if last_bytes == b"fd9":  # if the data ends with the magic bytes from jpeg
             print("No voltage found..")
         else:  # extract voltage
@@ -124,16 +128,16 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
         return image
 
     def handle(self):
-        self.request.settimeout(2)
+        self.request.settimeout(CAMERA_READ_TIMEOUT)
 
         try:
-            image = self.read()
-            image = codecs.decode(image, "hex")
+            image = self.read()  # read image
+            image = codecs.decode(image, "hex")  # decode image from hex
             
             #nparr = np.fromstring(image, np.uint8)
             #image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
             
-            # send image
+            # send image to the heimdall backend
             image_base_64 = base64.b64encode(image)
             post_image(image_base_64)
         except socket.timeout as te:
