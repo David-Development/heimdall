@@ -26,6 +26,7 @@ Installation and Usage Instructions can be found in the [corresponding Installat
   - [ ] Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
   - [ ] [Update API access](https://github.com/David-Development/heimdall-frontend/blob/1332d96939c2f3101c0526444840a3ca83d09130/src/management/Classification.js#L187) to use the getImageUrl from HTTPClient 
   - [ ] only show images with one person (in classification view)
+- [ ] remove heimdall-backend, heimdall-frontend and emq-docker dependency from this repo (the images are included via dockerhub - dependency is only used for debugging purposes)
 - [ ] Implement some kind of housekeeping operation (delete old images) e.g.
   - after a training delete all images (good for performance)
   - delete images that are older than 10 days
