@@ -23,14 +23,14 @@ Installation and Usage Instructions can be found in the [corresponding Installat
   - [ ] Blue mark stays on even after classifying an image 
   - [ ] Improve instructions on what to do after opening the timeline
   - [ ] LiveView - naming is misleading/confusing - change to something like "DetectionView"?
-- [ ] Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
+  - [ ] Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
+  - [ ] [Update API access](https://github.com/David-Development/heimdall-frontend/blob/1332d96939c2f3101c0526444840a3ca83d09130/src/management/Classification.js#L187) to use the getImageUrl from HTTPClient 
+  - [ ] only show images with one person (in classification view)
 - [ ] Implement some kind of housekeeping operation (delete old images) e.g.
   - after a training delete all images (good for performance)
   - delete images that are older than 10 days
   - keep 100 (unclassified) images
 - [ ] Disable redis public port
-- [ ] only show images with one person (in classification view)
-- [ ] [Update API access](https://github.com/David-Development/heimdall-frontend/blob/1332d96939c2f3101c0526444840a3ca83d09130/src/management/Classification.js#L187) to use the getImageUrl from HTTPClient 
 - [ ] [Facial blur detection](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) - Remove blurry images (difficult to implement since amount of blur depends on many factors)
 - [ ] Write frontend tests (read readme in heimdall-frontend for information on react testing)
 - [x] Test resized images from API / Add special api for resized images
