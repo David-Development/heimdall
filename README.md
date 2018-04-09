@@ -21,6 +21,8 @@ Installation and Usage Instructions can be found in the [corresponding Installat
 - UI
   - [ ] Improve visibility of progressbar in React App (training progress)
   - [ ] Blue mark stays on even after classifying an image 
+  - [ ] Improve instructions on what to do after opening the timeline
+  - [ ] LiveView - naming is misleading/confusing - change to something like "DetectionView"?
 - [ ] Reload page when clicking on the icon in the sidebar (if the page is already open the page won't reload)
 - [ ] Implement some kind of housekeeping operation (delete old images) e.g.
   - after a training delete all images (good for performance)
