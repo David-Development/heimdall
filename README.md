@@ -30,10 +30,10 @@ Installation and Usage Instructions can be found in the [corresponding Installat
   - keep 100 (unclassified) images
 - [ ] Disable redis public port
 - [ ] only show images with one person (in classification view)
-- [ ] Test resized images from API / Add special api for resized images
-- [ ] Update API access to use the getImagUrl from HTTPClient
-- [ ] [Facial blur detection](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) - Remove blurry images
+- [ ] [Update API access](https://github.com/David-Development/heimdall-frontend/blob/1332d96939c2f3101c0526444840a3ca83d09130/src/management/Classification.js#L187) to use the getImageUrl from HTTPClient 
+- [ ] [Facial blur detection](https://www.pyimagesearch.com/2015/09/07/blur-detection-with-opencv/) - Remove blurry images (difficult to implement since amount of blur depends on many factors)
 - [ ] Write frontend tests (read readme in heimdall-frontend for information on react testing)
+- [x] Test resized images from API / Add special api for resized images
 - [x] Check exposed ports in [Dockerfiles / Docker-Compose](https://stackoverflow.com/a/22150099)
 - [x] Cleanup backend (Remove unused imports / Refactor code)
 - [x] Better error handling (Push error messages to the client)
