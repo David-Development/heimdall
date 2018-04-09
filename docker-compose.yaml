@@ -130,13 +130,12 @@ services:
       - "./mock_camera/images:/app/images" 
 
   # espeakbox allows you to generate a mp3 file from a given text
+  # localhost:8080/voices
+  # localhost:8080/speech?text=David Luhmer&voice=de&speed=100&encoding=mp3
   espeakbox:
     image: parente/espeakbox
     ports:
       - "8080:8080"
-    
-  # localhost:8080/voices
-  # localhost:8080/speech?text=David Luhmer&voice=de&speed=100&encoding=mp3
 
 
   # http://emqttd-docs.readthedocs.io/en/latest/getstarted.html#web-dashboard
@@ -200,15 +199,8 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:8083:8083"
-  
 
 
 networks:
   bridge-iot:
-    external: true
-#  default:
-#    driver: heimdall-default
-#  front:
-#    driver: bridge
-
-  
+    external: true  
