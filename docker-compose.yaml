@@ -2,15 +2,6 @@ version: '3.4'
 
 services:
 
-  camera_rtsp:
-    container_name: camera-rtsp
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
-    volumes:
-      - "./heimdall-backend/startDockerCamera.sh:/app/startDocker.sh"
-      - "./heimdall-backend/camerahandler_rtsp.py:/app/camerahandler_rtsp.py"
-
   heimdall-backend: 
     container_name: heimdall-backend
     build:
@@ -32,6 +23,22 @@ services:
     #ports: 
     #  - "5000:5000/tcp"
 
+  heimdall-frontend:
+    container_name: heimdall-frontend
+    image: luhmer/heimdall-frontend:v1.0
+    build:
+      context: ./heimdall-frontend
+      dockerfile: Dockerfile
+#      args:
+#        NODE_ENV: dev # This line is required for dev mode
+#    command: /bin/sh -c "cd /app/dev/ && yarn install --modules-folder .. && yarn start" # This line is required for dev mode
+#    volumes: # This line is required for dev mode
+#      - "./heimdall-frontend/:/app/dev/" # This line is required for dev mode
+    environment:
+      - TZ=${TIMEZONE}
+#    ports:
+#      - "3000:3000/tcp"
+    
   postgres: 
     container_name: postgres
     image: postgres
@@ -51,32 +58,22 @@ services:
     ports:
       - "6379:6379"
 
-  heimdall-frontend:
-    container_name: heimdall-frontend
-    image: luhmer/heimdall-frontend:v1.0
-    build:
-      context: ./heimdall-frontend
-      dockerfile: Dockerfile
-#      args:
-#        NODE_ENV: dev # This line is required for dev mode
-#    command: /bin/sh -c "cd /app/dev/ && yarn install --modules-folder .. && yarn start" # This line is required for dev mode
-#    volumes: # This line is required for dev mode
-#      - "./heimdall-frontend/:/app/dev/" # This line is required for dev mode
+  # RTSP Camera Proxy
+  heimdall-camera-rtsp:
+    container_name: heimdall-camera-rtsp
+    image: luhmer/opencv-python3:v3.4.1
+    volumes:
+      - "./heimdall-camera-rtsp/camerahandler_rtsp.py:/usr/src/app/camerahandler_rtsp.py"
     environment:
-      - TZ=${TIMEZONE}
-#    ports:
-#      - "3000:3000/tcp"
-    
+      - RTSP_HOST=10.20.146.26
+      #- RTSP_HOST=192.168.10.48
+    command: python3 -u /usr/src/app/camerahandler_rtsp.py
 
-#  heimdall-frontend:
-#    container_name: heimdall-frontend
-#    image: nginx
-#    volumes:
-#      - "./heimdall-frontend/:/usr/share/nginx/html:ro"
 
+  # Socket Camera Proxy
   heimdall-camera-proxy:
     container_name: heimdall-camera-proxy
-    image: luhmer/heimdall-backend:v1.0
+    image: luhmer/opencv-python3:v3.4.1
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
     command: python3 -u /usr/src/app/camerahandler.py
@@ -95,7 +92,7 @@ services:
     ports:
       - "0.0.0.0:9000:9000/tcp"
       
-
+  # h264 support
   ffmpeg_h264_stream:
     container_name: ffmpeg-h264-stream
     build:
@@ -124,9 +121,7 @@ services:
 
   mock-camera:
     container_name: mock-camera
-    build:
-      context: ./heimdall-backend
-      dockerfile: Dockerfile
+    image: luhmer/heimdall-backend:v1.0
     environment:
       - TZ=${TIMEZONE}
     volumes:
@@ -134,10 +129,11 @@ services:
       - "./mock_camera/mqttCamera.py:/app/mqttCamera.py" 
       - "./mock_camera/images:/app/images" 
 
-  #espeakbox:
-  #  image: parente/espeakbox
-  #  ports:
-  #    - "8080:8080"
+  # espeakbox allows you to generate a mp3 file from a given text
+  espeakbox:
+    image: parente/espeakbox
+    ports:
+      - "8080:8080"
     
   # localhost:8080/voices
   # localhost:8080/speech?text=David Luhmer&voice=de&speed=100&encoding=mp3
@@ -174,17 +170,17 @@ services:
 #      - "9001:9001/tcp"   # mosquitto
 
 
-
+  # pgstudio = PostgreSQL Studio (Web-Based Postgres SQL GUI)
   # Login:
   #   host: postgres
   #   user: heimdall
   #   pass: heimdall
   #   database: heimdall
-#  pgstudio:
-#    container_name: pgstudio
-#    image: lukasmartinelli/pgstudio
-#    ports:
-#      - "8080:8080"
+  pgstudio:
+    container_name: pgstudio
+    image: lukasmartinelli/pgstudio
+    ports:
+      - "8080:8080"
 
 
   heimdall-proxy:
