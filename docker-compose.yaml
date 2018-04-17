@@ -73,7 +73,7 @@ services:
   # Socket Camera Proxy
   heimdall-camera-proxy:
     container_name: heimdall-camera-proxy
-    image: luhmer/opencv-python3:v3.4.1
+    image: luhmer/heimdall-backend:v1.0
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
     command: python3 -u /usr/src/app/camerahandler.py
