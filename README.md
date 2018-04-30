@@ -17,7 +17,8 @@ Installation and Usage Instructions can be found in the [corresponding Installat
 
 
 # TODO
-
+- Camera
+  - [ ] Disable DHCP to allow the first image to be transmitted earlier/faster
 - UI
   - [ ] Improve visibility of progressbar in React App (training progress)
   - [ ] Blue mark stays on even after classifying an image 
