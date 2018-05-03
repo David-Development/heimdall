@@ -76,10 +76,12 @@ services:
 
   heimdall-camera-proxy:
     container_name: heimdall-camera-proxy
-    image: luhmer/heimdall-backend:v1.0
+    build:
+      context: ./heimdall-camera-proxy
+      dockerfile: Dockerfile
+    image: luhmer/heimdall-camera-proxy:v1.0
     volumes:
       - "./heimdall-camera-proxy/:/usr/src/app/"
-    command: python3 -u /usr/src/app/camerahandler.py
     #environment:
     #  - HEIMDALL_BACKEND=http://heimdall-backend:5000 # Inside same docker-compose
     #  - HEIMDALL_BACKEND=http://10.20.114.105:5000 # otherwise set IP

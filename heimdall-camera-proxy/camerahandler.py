@@ -25,12 +25,13 @@ CAMERA_READ_TIMEOUT  = 4  # seconds
 BACKEND_SEND_TIMEOUT = 1  # seconds
 
 
-def post_image(image_base_64): 
-    print('Sending photo:', datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')) 
+#@profile
+def post_image(image_base_64):
+    print('Sending photo:', datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     # send image
     url = 'http://heimdall-backend:5000/api/live/'
     data = {'image': image_base_64, 'annotate': 'True'}
-    
+
     try:
         requests.post(url, data=data, timeout=BACKEND_SEND_TIMEOUT)
     except requests.exceptions.ReadTimeout as e:
@@ -39,34 +40,34 @@ def post_image(image_base_64):
         print("NewConnectionError: Heimdall backend not responding!")
 
 '''
-### MQTT 
-#broker = 'mqtt-broker' 
+### MQTT
+#broker = 'mqtt-broker'
 broker = os.environ.get('MQTT_BROKER_IP')
 #broker = 'localhost'
-topic ='trigger' 
+topic ='trigger'
 mqttQos = 0
-mqttRetained = False 
+mqttRetained = False
 
 
 
 
-def post_image(image_base_64): 
+def post_image(image_base_64):
     print("============")
-    print('Sending photo') 
+    print('Sending photo')
     (result, mid) = client.publish("camera", image_base_64, mqttQos, mqttRetained)
     print('Result:', result, '- Mid:', mid)
 
 
-def on_connect(client, userdata, flags, rc): 
-    print("Connected with result code "+str(rc)) 
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
     client.subscribe(topic) 
-    
+
 # The callback for when a PUBLISH message is received from the server.
-# 
-def on_message(client, userdata, msg): 
+#
+def on_message(client, userdata, msg):
     print("=========")
-    payload = str(msg.payload.decode('ascii'))  # decode the binary string 
-    print("on_message: " + msg.topic + " " + payload) 
+    payload = str(msg.payload.decode('ascii'))  # decode the binary string
+    print("on_message: " + msg.topic + " " + payload)
 
 def on_publish(client, obj, mid):
     print("Publish - Mid:", mid)
@@ -82,35 +83,38 @@ def on_disconnect(client, userdata, rc):
 
 client = mqtt.Client(client_id="heimdall-camera")  # protocol=mqtt.MQTTv31
 
-client.on_connect = on_connect    # call these on connect and on message 
+client.on_connect = on_connect # call these on connect and on message
 client.on_message = on_message
-client.on_publish = on_publish 
+client.on_publish = on_publish
 client.on_disconnect = on_disconnect
 #client.on_log = on_log
 
-#client.username_pw_set(username='user',password='pwd')  # need this 
+#client.username_pw_set(username='user',password='pwd')  # need this
 
 print("Connecting to broker: " + broker)
-client.connect(broker, 1883, 60) 
-# client.loop_forever()    #  don't get past this 
+client.connect(broker, 1883, 60)
+# client.loop_forever()    #  don't get past this
 client.loop_start()    #  run in background and free up main thread
 
 '''
 
 
+
+
 class CameraTCPHandler(socketserver.BaseRequestHandler):
 
     # Read single image from camera
+    #@profile
     def read(self):
-        image = b''
+        image = bytearray()
         while True:
             # Receiving from camera
             data = self.request.recv(4096)
             if not data:
                 break
+            image.extend(data)
             # print("More data: {}".format(sys.getsizeof(data)))
-            image += data
-
+          
         # extract voltage from received bytes
         number_of_bytes = 3  # number of bytes allocated for transmitting the voltage
         last_bytes = image[-number_of_bytes:] # extract last x bytes and divide by 100 (e.g. 4.0 Volt is send as 400)
@@ -124,19 +128,20 @@ class CameraTCPHandler(socketserver.BaseRequestHandler):
             #print(image[-30:])
             image = image[:-number_of_bytes].strip()
             #print(image[-30:])
-            
+
         return image
 
+    #@profile
     def handle(self):
         self.request.settimeout(CAMERA_READ_TIMEOUT)
 
         try:
             image = self.read()  # read image
             image = codecs.decode(image, "hex")  # decode image from hex
-            
+
             #nparr = np.fromstring(image, np.uint8)
             #image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-            
+
             # send image to the heimdall backend
             image_base_64 = base64.b64encode(image)
             post_image(image_base_64)
