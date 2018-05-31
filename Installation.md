@@ -88,7 +88,7 @@ docker-compose up heimdall-backend heimdall-frontend heimdall-proxy heimdall-cam
 
 ### TCP Cameras
 
-The System is able to handle all kinds 
+The System is able to handle all kinds TCP cameras (such as the one developed at the Bonn-Rhein-Sieg University). It also supports Raspberry PI based cameras. I created a small script which can be found along with the installation instructions on the raspberry pi project page: https://github.com/David-Development/heimdall-raspberry
 
 ```bash
 # Change into the directory where you downloaded heimdall to
