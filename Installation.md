@@ -3,7 +3,7 @@
 - Setup
   - docker/docker-compose installation instructions
   - Clone repo / Pull docker images
-  - Start heimdall with other cameras
+  - Start heimdall using RTSP / MQTT / TCP-Socket Camera
     - RTSP cameras
     - TCP cameras
     - MQTT cameras
@@ -107,7 +107,7 @@ docker-compose up heimdall-backend heimdall-frontend heimdall-proxy
 ```
 
 
-## Setup Camera (developed at the Bonn-Rhein-Sieg University)
+## Start Heimdall (using Camera developed at the Bonn-Rhein-Sieg University)
 
 - Camera has a fixed IP adress: `192.168.1.177`
 - Commands to get information about Wifi Devices:
