@@ -1,3 +1,19 @@
+# Table of Content
+
+- Setup
+  - (Optional) Installation instructions for Low-Energy Camera developed at the Bonn-Rhein-Sieg University)
+  - docker/docker-compose installation instructions
+  - Clone repo / Pull docker images
+  - Start heimdall using the low-energy camera
+  - Start heimdall with other cameras
+    - RTSP cameras
+    - TCP cameras
+    - MQTT cameras
+- Useful Commands for debugging/testing/development
+
+
+
+
 # Setup
 
 - System was tested on XUbuntu 16.04.3
@@ -29,13 +45,6 @@ sudo nano /etc/dhcp/dhcpd.conf
 sudo service isc-dhcp-server restart
 ```
 
-## Clone this repo
-
-```sh
-cd /home/heimdall/Desktop
-git clone --recursive https://github.com/David-Development/heimdall.git
-```
-
 ## Install Docker & Docker Compose
 
 - Run `installDocker.sh` file from the root of the heimdall project or follow the installation instructions on [docs.docker.com](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository)
@@ -50,6 +59,13 @@ sudo chmod g+rwx "/home/$USER/.docker" -R
 reboot
 ```
 
+## Clone this repo
+
+```sh
+cd /home/heimdall/Desktop
+git clone --recursive https://github.com/David-Development/heimdall.git
+```
+
 ## Pull Heimdall Docker Images
 
 ```sh
@@ -59,13 +75,51 @@ docker pull luhmer/heimdall-frontend
 docker pull luhmer/emqtt
 ```
 
-## Installation of Heimdall
+## Start Heimdall (using the low-energy camera)
 
 ```sh
 cd /home/heimdall/Desktop/heimdall
 sudo nano startHeimdall.sh # replace the WIFI_DEVICE_ID with your wifi hotspot device id and set the WIFI_SSID as well as the WIFI_PASSWORD variable accordingly.
 sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
 ```
+
+## Start Heimdall using any other TCP-Socket / RTSP Camera
+
+Beside the low-enery camera developed at the Bonn-Rhein-Sieg University, Heimdall also supports RTSP, MQTT as well as TCP-Socket cameras. 
+
+### RTSP Cameras
+
+Edit the `docker-compose.yaml` file. Adjust the `RTSP_HOST` variable according to your environment in the `heimdall-camera-rtsp` service definition.
+
+```bash
+# Change into the directory where you downloaded heimdall to
+cd /home/heimdall/Desktop/heimdall
+# Start all required docker containers
+docker-compose up heimdall-backend heimdall-frontend heimdall-proxy heimdall-camera-rtsp
+```
+
+### TCP Cameras
+
+The System is able to handle all kinds 
+
+```bash
+# Change into the directory where you downloaded heimdall to
+cd /home/heimdall/Desktop/heimdall
+# Start all required docker containers
+docker-compose up heimdall-backend heimdall-frontend heimdall-proxy heimdall-camera-proxy
+```
+
+### MQTT Cameras
+
+Connect your MQTT based camera to the provided MQTT Broker (host-ip:1883). Publish images on the channel: `camera`
+
+```bash
+# Change into the directory where you downloaded heimdall to
+cd /home/heimdall/Desktop/heimdall
+# Start all required docker containers
+docker-compose up heimdall-backend heimdall-frontend heimdall-proxy
+```
+
 
 ### Setup Heimdall to start while booting
 
