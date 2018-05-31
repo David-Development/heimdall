@@ -77,7 +77,7 @@ Beside the low-enery camera developed at the Bonn-Rhein-Sieg University, Heimdal
 
 ### RTSP Cameras
 
-Edit the `docker-compose.yaml` file. Adjust the `RTSP_HOST` variable according to your environment in the `heimdall-camera-rtsp` service definition.
+Almost all modern IP Surveillance Cameras support the RTSP Protocol. Those cameras can be used in the Heimdall system to perform facial recognition. To setup heimdall, you'll have to edit the `docker-compose.yaml` file. Adjust the `RTSP_HOST` variable accordingly to your environment (in the `heimdall-camera-rtsp` service definition).
 
 ```bash
 # Change into the directory where you downloaded heimdall to
