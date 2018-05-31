@@ -108,6 +108,21 @@ cd /home/heimdall/Desktop/heimdall
 docker-compose up heimdall-backend heimdall-frontend heimdall-proxy
 ```
 
+## Open up Webinterface
+
+The Webinterface will be available on your computer on Port 80. You can access it by using http://localhost or http://127.0.0.1 or by using your IP address.
+
+
+
+## Install Android App
+
+The Android App supports to automatically turn on the screen when a person is detected. It'll shut off the screen after some time to save energy. You can download the app here: https://github.com/David-Development/heimdall-android. After installing the app, click on Settings and Type in your IP Address of your computer. After pressing "save", the app should connect to the Backend using MQTT.
+
+The App was tested on Android 4.0 (Samsung Tablet). There might be some issues on newer devices due to some strict energy saving features of Android 7+ (However I didn't run any long term tests yet).
+
+
+
+
 ## Start Heimdall (using Camera developed at the Bonn-Rhein-Sieg University)
 
 - Camera has a fixed IP adress: `192.168.1.177`
@@ -135,27 +150,13 @@ sudo nano /etc/dhcp/dhcpd.conf
 sudo service isc-dhcp-server restart
 ```
 
-
-## Start Heimdall (using the low-energy camera)
+Start docker containers:
 
 ```sh
 cd /home/heimdall/Desktop/heimdall
 sudo nano startHeimdall.sh # replace the WIFI_DEVICE_ID with your wifi hotspot device id and set the WIFI_SSID as well as the WIFI_PASSWORD variable accordingly.
 sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
 ```
-
-
-## Open up Webinterface
-
-The Webinterface will be available on your computer on Port 80. You can access it by using http://localhost or http://127.0.0.1 or by using your IP address.
-
-
-
-## Install Android App
-
-The Android App supports to automatically turn on the screen when a person is detected. It'll shut off the screen after some time to save energy. You can download the app here: https://github.com/David-Development/heimdall-android. After installing the app, click on Settings and Type in your IP Address of your computer. After pressing "save", the app should connect to the Backend using MQTT.
-
-The App was tested on Android 4.0 (Samsung Tablet). There might be some issues on newer devices due to some strict energy saving features of Android 7+ (However I didn't run any long term tests yet).
 
 
 
