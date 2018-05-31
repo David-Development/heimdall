@@ -4,8 +4,8 @@
   - docker/docker-compose installation instructions
   - Clone repo / Pull docker images
   - Start heimdall using RTSP / MQTT / TCP-Socket Camera
-    - RTSP cameras
-    - TCP cameras
+    - RTSP cameras (e.g. Surveillance Cameras)
+    - TCP cameras (e.g. Raspberry PI)
     - MQTT cameras
   - Open Webinterface
   - Setup Android App
