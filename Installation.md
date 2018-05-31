@@ -1,14 +1,14 @@
 # Table of Content
 
 - Setup
-  - (Optional) Installation instructions for Low-Energy Camera developed at the Bonn-Rhein-Sieg University)
   - docker/docker-compose installation instructions
   - Clone repo / Pull docker images
-  - Start heimdall using the low-energy camera
   - Start heimdall with other cameras
     - RTSP cameras
     - TCP cameras
     - MQTT cameras
+  - (Optional) Installation instructions for Low-Energy Camera developed at the Bonn-Rhein-Sieg University)
+    - Start heimdall using the low-energy camera
 - Useful Commands for debugging/testing/development
 
 
@@ -18,33 +18,6 @@
 
 - System was tested on XUbuntu 16.04.3 - It took me around 30 minutes to install XUbuntu as well as heimdall on an Intel NUC Computer. Installing and setting up the camera may take some more time.
 
-
-## Setup Camera (developed at the Bonn-Rhein-Sieg University)
-
-- Camera has a fixed IP adress: `192.168.1.177`
-- Commands to get information about Wifi Devices:
-  - `nmcli device` # List of Network Devices
-  - `nmcli device wifi` # List of Wifi Devices (inkl. )
-  - `nmcli device show`
-- **Run the commands below - Replace `<wifi_device_id>` with the correct identifier of your wifi card that you want to use**
-
-```sh
-sudo apt-get install isc-dhcp-server
-
-sudo nano /etc/default/isc-dhcp-server
-    Add <wifi_device_id> to ipv4 interface
-
-sudo nano /etc/dhcp/dhcpd.conf
-    subnet 192.168.1.0 netmask 255.255.255.0 {
-        range 192.168.1.1 192.168.1.254;
-        option subnet-mask 255.255.255.0;
-        option routers 192.168.1.177;
-        default-lease-time 600;
-        max-lease-time 7200;
-    }
-
-sudo service isc-dhcp-server restart
-```
 
 ## Install Docker & Docker Compose
 
@@ -76,15 +49,27 @@ docker pull luhmer/heimdall-frontend
 docker pull luhmer/emqtt
 ```
 
-## Start Heimdall (using the low-energy camera)
+
+### Setup Heimdall to start while booting
+
+- `sudo nano /etc/rc.local`
+- Append the following code snippet (before the `exit 0` line)
 
 ```sh
-cd /home/heimdall/Desktop/heimdall
-sudo nano startHeimdall.sh # replace the WIFI_DEVICE_ID with your wifi hotspot device id and set the WIFI_SSID as well as the WIFI_PASSWORD variable accordingly.
-sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
+sh /home/heimdall/Desktop/heimdall/startHeimdall.sh > /home/heimdall/Desktop/heimdall-log.txt 2>&1 &
+exit 0
 ```
 
-## Start Heimdall using any other TCP-Socket / RTSP Camera
+#### Access log file
+
+After starting the docker-containers (as shown below) you can view the log files by opening the `heimdall-log.txt`
+
+`tail -f -n 100 heimdall-log.txt`
+
+
+
+
+## Start Heimdall (using RTSP / MQTT / TCP-Socket Camera)
 
 Beside the low-enery camera developed at the Bonn-Rhein-Sieg University, Heimdall also supports RTSP, MQTT as well as TCP-Socket cameras. 
 
@@ -122,19 +107,42 @@ docker-compose up heimdall-backend heimdall-frontend heimdall-proxy
 ```
 
 
-### Setup Heimdall to start while booting
+## Setup Camera (developed at the Bonn-Rhein-Sieg University)
 
-- `sudo nano /etc/rc.local`
-- Append the following code snippet (before the `exit 0` line)
+- Camera has a fixed IP adress: `192.168.1.177`
+- Commands to get information about Wifi Devices:
+  - `nmcli device` # List of Network Devices
+  - `nmcli device wifi` # List of Wifi Devices (inkl. )
+  - `nmcli device show`
+- **Run the commands below - Replace `<wifi_device_id>` with the correct identifier of your wifi card that you want to use**
 
 ```sh
-sh /home/heimdall/Desktop/heimdall/startHeimdall.sh > /home/heimdall/Desktop/heimdall-log.txt 2>&1 &
-exit 0
+sudo apt-get install isc-dhcp-server
+
+sudo nano /etc/default/isc-dhcp-server
+    Add <wifi_device_id> to ipv4 interface
+
+sudo nano /etc/dhcp/dhcpd.conf
+    subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.1 192.168.1.254;
+        option subnet-mask 255.255.255.0;
+        option routers 192.168.1.177;
+        default-lease-time 600;
+        max-lease-time 7200;
+    }
+
+sudo service isc-dhcp-server restart
 ```
 
-#### Access log file
 
-`tail -f -n 100 heimdall-log.txt`
+## Start Heimdall (using the low-energy camera)
+
+```sh
+cd /home/heimdall/Desktop/heimdall
+sudo nano startHeimdall.sh # replace the WIFI_DEVICE_ID with your wifi hotspot device id and set the WIFI_SSID as well as the WIFI_PASSWORD variable accordingly.
+sh startHeimdall.sh # Test installation (make sure everything starts without error messages)
+```
+
 
 
 ## Optional (Not required anymore)
