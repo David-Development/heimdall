@@ -16,7 +16,8 @@
 
 # Setup
 
-- System was tested on XUbuntu 16.04.3
+- System was tested on XUbuntu 16.04.3 - It took me around 30 minutes to install XUbuntu as well as heimdall on an Intel NUC Computer. Installing and setting up the camera may take some more time.
+
 
 ## Setup Camera (developed at the Bonn-Rhein-Sieg University)
 
